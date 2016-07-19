@@ -30,7 +30,7 @@ void digits2chars_r(string& str)
 string digits2chars(string str)
 {
     std::for_each(str.begin(), str.end(), [](char &a) {
-        a += '0';
+        if(a >= 0 && a <= 9 ) a += '0';
     });
     return str;
 }
@@ -45,7 +45,7 @@ void chars2digits_r(string& str)
 string chars2digits(string str)
 {
     std::for_each(str.begin(), str.end(), [](char &a) {
-        a -= '0';
+        if(a >= '0' && a <= '9' ) a -= '0';
     });
     return str;
 }
@@ -85,9 +85,13 @@ string _add(string str1, string str2)
     if(_compare(str1, str2) < 0)
         std::swap(str1, str2);
 
+    /* Addition by byte. */
     for(string::size_type i = 0; i < str2.size(); ++i)
-    {
         str1[i] += str2[i];
+
+    /* Handle the carry. */
+    for(string::size_type i = 0; i < str1.size(); ++i)
+    {
         if(str1[i] > 9)
         {
             if(i < str1.size() - 1)
@@ -97,28 +101,26 @@ string _add(string str1, string str2)
             }
             else
             {
-                str1.push_back(1);
+                str1.push_back(str1[i] / 10);
+                str1[i] = str1[i] % 10;
             }
         }
     }
+
 
     return str1;
 }
 
 /* 1. Only allow the situation that both str1 & str2 is positive and
- *    str1 - str2 > 0
+ *    str1 - str2 >= 0
  * 2. Operate the really digit format
  * 3. The parameter lower digit is on ahead(keep low digit aligned).
  */
 string _minus(string str1, string str2)
 {
-    if(_compare(str1, str2) < 0)
-    {
-        std::cout << "err: miss using _minus method.\n";
-        std::cout << "     para1 shall not smaller than para2 in math."
-                  << std::endl;
+    if(_compare(str1, str2) == 0)
+//        return string(1, 0);
         return "";
-    }
 
     for(string::size_type i = 0; i < str2.size(); ++i)
     {
@@ -137,7 +139,12 @@ string _minus(string str1, string str2)
     }
 
     /* Eliminate redundant 0 */
-    while(str1.back() == 0) str1.pop_back();
+#if 0
+    while(str1.back() == 0 && str1.size() > 1)
+        str1.pop_back();
+#endif
+    while(0 == str1.back())
+        str1.pop_back();
 
     return str1;
 }
@@ -219,7 +226,7 @@ string minus(string str1, string str2)
     return add(str1, str2);
 }
 
-// 'x'
+// 'x' 移位进位法 -- 先乘-->错位-->相加
 string multiple(string str1, string str2)
 {
     bool sign1 = _pretreatment(str1);
@@ -280,7 +287,7 @@ std::tuple<char, string> _try_quotient(string dividend, string divisor)
 
     char quotient = 1;
     dividend = _minus(dividend, divisor);
-    while(_compare(dividend, divisor) > 0)
+    while(_compare(dividend, divisor) >= 0)
     {
         quotient++;
         dividend = _minus(dividend, divisor);
@@ -325,8 +332,12 @@ std::tuple<string, string> divide(string dividend, string divisor)
     }
 
     std::reverse(remainder.begin(), remainder.end());
+
     if(quotient.front() == 0 && quotient.size() > 1)
         quotient = string(quotient, 1, quotient.size() - 1);
+
+    if("" == remainder) remainder.push_back(0);
+
     if(sign1 != sign2)
     {
         quotient = '-' + quotient;
@@ -340,10 +351,54 @@ std::tuple<string, string> divide(string dividend, string divisor)
 };
 
 
-int main()
+#define handle_error(msg) \
+    do { perror(msg); exit(EXIT_FAILURE); } while (0)
+
+void print_elapsed_time(void)
 {
-    string str1("-123523");
-    string str2("23456");
+    static struct timespec start;
+    struct timespec curr;
+    static int first_call = 1;
+    int secs, nsecs;
+
+    if (first_call)
+    {
+        first_call = 0;
+
+        if (clock_gettime(CLOCK_MONOTONIC, &start) == -1)
+            handle_error("clock_gettime");
+    }
+
+    if (clock_gettime(CLOCK_MONOTONIC, &curr) == -1)
+        handle_error("clock_gettime");
+
+    secs = curr.tv_sec - start.tv_sec;
+    nsecs = curr.tv_nsec - start.tv_nsec;
+
+    if (nsecs < 0)
+    {
+        secs--;
+        nsecs += 1000000000;
+    }
+
+    printf("## %d.%03d ##\n", secs, (nsecs + 500000) / 1000000);
+}
+
+int main(int argc, char* argv[])
+{
+    string str1;
+    string str2;
+
+    if(argc == 3)
+    {
+        str1.assign(argv[1]);
+        str2.assign(argv[2]);
+    }
+    else
+    {
+        std::cout << "err: wrong number of parameter." << std::endl;
+        return -1;
+    }
 
     // std::cout << compare(str1, str2) << std::endl;;
 
@@ -361,22 +416,23 @@ int main()
 //                              chars2digits(str2))) << std::endl;
 //    std::cout << digits2chars(BigNumber::_minus(chars2digits(str1),
 //                              chars2digits(str2))) << std::endl;
+    print_elapsed_time();
+    std::cout << "str1 + str2 = " << digits2chars(BigNumber::add(str1, str2)) << std::endl;
+    std::cout << "str1 - str2 = " << digits2chars(BigNumber::minus(str1, str2)) << std::endl;
+    std::cout << "str2 - str1 = " << digits2chars(BigNumber::minus(str2, str1)) << std::endl;
 
-    std::cout << digits2chars(BigNumber::add(str1, str2)) << std::endl;
-    std::cout << digits2chars(BigNumber::minus(str1, str2)) << std::endl;
-    std::cout << digits2chars(BigNumber::minus(str2, str1)) << std::endl;
+    std::cout << "str1 * str2 = " << digits2chars(BigNumber::multiple(str1, str2)) << std::endl;
 
-    std::cout << digits2chars(BigNumber::multiple(str1, str2)) << std::endl;
-
-    std::cout << digits2chars(std::get<0>(BigNumber::divide(str1, str2)))
+    std::cout << "str1 / str2 = " << digits2chars(std::get<0>(BigNumber::divide(str1, str2)))
               << std::endl;
-    std::cout << digits2chars(std::get<1>(BigNumber::divide(str1, str2)))
+    std::cout << "str1 % str2 = " << digits2chars(std::get<1>(BigNumber::divide(str1, str2)))
               << std::endl;
 
-    std::cout << digits2chars(std::get<0>(BigNumber::divide(str2, str1)))
+    std::cout << "str2 / str1 = " << digits2chars(std::get<0>(BigNumber::divide(str2, str1)))
               << std::endl;
-    std::cout << digits2chars(std::get<1>(BigNumber::divide(str2, str1)))
+    std::cout << "str2 % str1 = " << digits2chars(std::get<1>(BigNumber::divide(str2, str1)))
               << std::endl;
+    print_elapsed_time();
 
     return 0;
 
