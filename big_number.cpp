@@ -76,7 +76,8 @@ int _compare(string str1, string str2)
     }
 }
 
-/* 1. Only allow the two positive digit addition
+/* Basic addition
+ * 1. Only allow the two positive digit addition
  * 2. Operate the really digit format
  * 3. The parameter lower digit is on ahead(the low digit aligned).
  */
@@ -111,10 +112,12 @@ string _add(string str1, string str2)
     return str1;
 }
 
-/* 1. Only allow the situation that both str1 & str2 is positive and
+/* Basic subtraction
+ * 1. Only allow the situation that both str1 & str2 is positive and
  *    str1 - str2 >= 0
  * 2. Operate the really digit format
  * 3. The parameter lower digit is on ahead(keep low digit aligned).
+ * 4. when the str1 == str2, it shall return "";
  */
 string _minus(string str1, string str2)
 {
@@ -226,7 +229,17 @@ string minus(string str1, string str2)
     return add(str1, str2);
 }
 
-// 'x' 移位进位法 -- 先乘-->错位-->相加
+/* 'x' --- multiplication--> dislocation --> addition
+ * For example: 81 + 81 = 162 that the char type can't hold correctly.
+ *  We can simply expand the digit by using _add() method.
+ *         9  9  9  1
+ *       x 9
+ *       -------------
+ *         81 81 81 9   <--- tmp
+ *       + 0  0  0  0   <--- res
+ *       -------------
+ *      8  9  9  1  9   <--- res
+ */
 string multiple(string str1, string str2)
 {
     bool sign1 = _pretreatment(str1);
@@ -242,24 +255,11 @@ string multiple(string str1, string str2)
     string res(str1.size(), 0);
     for(string::size_type i = 0; i < str2.size(); ++i)
     {
-        /* Simulate the single step of the multiple operation. */
+        /* Simulate the single step of the multiplication. */
         string tmp;
         for(string::size_type j = 0; j < str1.size(); ++j)
             tmp.push_back(str1[j] * str2[i]);
 
-        /* To avoid the adding operation overflow,
-           for example: 81 + 81 = 162 that the char type can't hold correctly.
-           We can simply expand the digit by using _add() method.
-                   9  9  9  1
-                 x 9
-                 -------------
-                   81 81 81 9   <--- tmp
-                 + 0  0  0  0   <--- res
-                 -------------
-                8  9  9  1  9   <--- res
-        */
-//        string assit(0, tmp.size());
-//        tmp = _add(tmp, assit);
 
         /* Keep the right dislocation. */
         for(string::size_type k = 0; k < i; ++k)
@@ -296,6 +296,13 @@ std::tuple<char, string> _try_quotient(string dividend, string divisor)
     return std::tuple<char, string>(quotient, dividend);
 }
 
+/*      1          30
+ *    -----        -----
+      9999|99      4321|123
+        99         369
+      -----        -----
+      990          172
+ */
 std::tuple<string, string> divide(string dividend, string divisor)
 {
     bool sign1 = _pretreatment(dividend);
@@ -314,12 +321,11 @@ std::tuple<string, string> divide(string dividend, string divisor)
     }
     else
     {
-        /* Find the quotient */
+        /* Find the proper */
         int npos = dividend.size() - divisor.size();
         string div(dividend, npos, divisor.size());
 
         auto res = _try_quotient(div, divisor);
-
         while(npos > 0)
         {
             quotient.push_back(std::get<0>(res));
@@ -400,7 +406,7 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    // std::cout << compare(str1, str2) << std::endl;;
+    // std::cout << _compare(str1, str2) << std::endl;;
 
     // std::cout << digits2chars
     //   (
