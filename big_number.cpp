@@ -108,7 +108,6 @@ string _add(string str1, string str2)
         }
     }
 
-
     return str1;
 }
 
@@ -441,5 +440,4 @@ int main(int argc, char* argv[])
     print_elapsed_time();
 
     return 0;
-
 }
