@@ -262,9 +262,8 @@ string multiple(string str1, string str2)
 
 
         /* Keep the right dislocation. */
-        for(string::size_type k = 0; k < i; ++k)
-            tmp = static_cast<char>(0) + tmp;
-        // std::cout << "tmp: " << digits2chars(tmp) << std::endl;;
+        tmp.insert(tmp.begin(), i, 0);
+        std::cout << "tmp: " << digits2chars(tmp) << std::endl;
 
         /* Accumulate the tmp to res in every loop. */
         res = _add(tmp, res);
