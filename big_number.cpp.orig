@@ -23,7 +23,7 @@ string erase_signed(string str)
 void digits2chars_r(string& str)
 {
     std::for_each(str.begin(), str.end(), [](char &a) {
-        a += '0';
+         a += '0';
     });
 }
 
@@ -50,7 +50,8 @@ string chars2digits(string str)
     return str;
 }
 
-namespace BigNumber {
+namespace BigNumber
+{
 /* 1. the low char corresponds the low digit, for example:
  *     in "12345", the '5' represents the number 50000
  *      and '1' represents the number 1.
@@ -62,10 +63,12 @@ int _compare(string str1, string str2)
         return 1;
     else if(str1.size() < str2.size())
         return -1;
-    else {
+    else
+    {
         string::reverse_iterator it1 = str1.rbegin();
         string::reverse_iterator it2 = str2.rbegin();
-        for(; it1 != str1.rend(); ++it1, ++it2) {
+        for(; it1 != str1.rend(); ++it1, ++it2)
+        {
             if(*it1 > *it2) return 1;
             if(*it1 < *it2) return -1;
         }
@@ -88,12 +91,17 @@ string _add(string str1, string str2)
         str1[i] += str2[i];
 
     /* Handle the carry. */
-    for(string::size_type i = 0; i < str1.size(); ++i) {
-        if(str1[i] > 9) {
-            if(i < str1.size() - 1) {
+    for(string::size_type i = 0; i < str1.size(); ++i)
+    {
+        if(str1[i] > 9)
+        {
+            if(i < str1.size() - 1)
+            {
                 str1[i + 1] += str1[i] / 10;
                 str1[i] = str1[i] % 10;
-            } else {
+            }
+            else
+            {
                 str1.push_back(str1[i] / 10);
                 str1[i] = str1[i] % 10;
             }
@@ -116,10 +124,14 @@ string _minus(string str1, string str2)
 //        return string(1, 0);
         return "";
 
-    for(string::size_type i = 0; i < str2.size(); ++i) {
-        if(str1[i] >= str2[i]) {
+    for(string::size_type i = 0; i < str2.size(); ++i)
+    {
+        if(str1[i] >= str2[i])
+        {
             str1[i] -= str2[i];
-        } else {
+        }
+        else
+        {
             /* Notice: the situation will not be present which
                the highest digit need a borrow. So that it will
                not cause index out of bound. */
@@ -166,23 +178,32 @@ string add(string str1, string str2)
 
     if(sign1 && sign2)
         str1 =  _add(str1, str2);
-    if(!sign1 && !sign2) {
+    if(!sign1 && !sign2)
+    {
         str1 = _add(str1, str2);
         sign = false;
     }
-    if(sign1 && !sign2) {
-        if(_compare(str1, str2) >= 0) {
+    if(sign1 && !sign2)
+    {
+        if(_compare(str1, str2) >= 0)
+        {
             str1 = _minus(str1, str2);
-        } else {
+        }
+        else
+        {
             str1 = _minus(str2, str1);
             sign = false;
         }
     }
-    if(!sign1 && sign2) {
-        if(_compare(str1, str2) >= 0) {
+    if(!sign1 && sign2)
+    {
+        if(_compare(str1, str2) >= 0)
+        {
             str1 = _minus(str1, str2);
             sign = false;
-        } else {
+        }
+        else
+        {
             str1 = _minus(str2, str1);
         }
     }
@@ -224,13 +245,15 @@ string multiple(string str1, string str2)
     bool sign2 = _pretreatment(str2);
 
     /* Make sure the abs value of str1 is the bigger one. */
-    if(_compare(str1, str2) < 0) {
+    if(_compare(str1, str2) < 0)
+    {
         std::swap(sign1, sign2);
         std::swap(str1, str2);
     }
 
     string res(str1.size(), 0);
-    for(string::size_type i = 0; i < str2.size(); ++i) {
+    for(string::size_type i = 0; i < str2.size(); ++i)
+    {
         /* Simulate the single step of the multiplication. */
         string tmp;
         for(string::size_type j = 0; j < str1.size(); ++j)
@@ -262,7 +285,8 @@ std::tuple<char, string> _try_quotient(string dividend, string divisor)
 
     char quotient = 1;
     dividend = _minus(dividend, divisor);
-    while(_compare(dividend, divisor) >= 0) {
+    while(_compare(dividend, divisor) >= 0)
+    {
         quotient++;
         dividend = _minus(dividend, divisor);
     }
@@ -283,19 +307,25 @@ std::tuple<string, string> divide(string dividend, string divisor)
     bool sign2 = _pretreatment(divisor);
 
     string quotient, remainder;
-    if(_compare(dividend, divisor) < 0) {
+    if(_compare(dividend, divisor) < 0)
+    {
         quotient = string(1, 0);
         remainder = divisor;
-    } else if(_compare(dividend, divisor) == 0) {
+    }
+    else if(_compare(dividend, divisor) == 0)
+    {
         quotient = string(1, 1);
         remainder = string(1, 0);
-    } else {
+    }
+    else
+    {
         /* Find the proper */
         int npos = dividend.size() - divisor.size();
         string div(dividend, npos, divisor.size());
 
         auto res = _try_quotient(div, divisor);
-        while(npos > 0) {
+        while(npos > 0)
+        {
             quotient.push_back(std::get<0>(res));
             div = dividend[--npos] + std::get<1>(res);
             res = _try_quotient(div, divisor);
@@ -312,7 +342,8 @@ std::tuple<string, string> divide(string dividend, string divisor)
 
     if("" == remainder) remainder.push_back(0);
 
-    if(sign1 != sign2) {
+    if(sign1 != sign2)
+    {
         quotient = '-' + quotient;
         remainder = '-' + remainder;
     }
@@ -334,7 +365,8 @@ void print_elapsed_time(void)
     static int first_call = 1;
     int secs, nsecs;
 
-    if (first_call) {
+    if (first_call)
+    {
         first_call = 0;
 
         if (clock_gettime(CLOCK_MONOTONIC, &start) == -1)
@@ -347,7 +379,8 @@ void print_elapsed_time(void)
     secs = curr.tv_sec - start.tv_sec;
     nsecs = curr.tv_nsec - start.tv_nsec;
 
-    if (nsecs < 0) {
+    if (nsecs < 0)
+    {
         secs--;
         nsecs += 1000000000;
     }
@@ -360,10 +393,13 @@ int main(int argc, char* argv[])
     string str1;
     string str2;
 
-    if(argc == 3) {
+    if(argc == 3)
+    {
         str1.assign(argv[1]);
         str2.assign(argv[2]);
-    } else {
+    }
+    else
+    {
         std::cout << "err: wrong number of parameter." << std::endl;
         return -1;
     }
