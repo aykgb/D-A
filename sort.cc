@@ -2,6 +2,7 @@
 #include "simple_sort.hpp"
 #include "merge_sort.hpp"
 #include "quick_sort.hpp"
+#include "heap_sort.hpp"
 
 int main()
 {
@@ -25,9 +26,12 @@ int main()
     // print(A, LENGTH);
     // insert_sort(A, LENGTH);
     // print(A, LENGTH);
-    merge_sort(A, 0, LENGTH - 1);
-    print(A, LENGTH);
-
+    // merge_sort(A, 0, LENGTH - 1);
+    // print(A, LENGTH);
     quick_sort(B, 0, LENGTH - 1);
     print(B, LENGTH);
+    heap_sort(A, LENGTH - 1);
+    print(A, LENGTH);
+
+    return 0;
 }

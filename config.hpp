@@ -13,7 +13,8 @@ const size_t LENGTH = 20;
 
 using namespace std;
 
-void print(int *A, int length) {
+template<typename T>
+void print(T A, int length) {
     for (int i = 0; i < length; i++) {
         std::cout << std::setw(5) << A[i];
         if ((i + 1) % 20 == 0) {
