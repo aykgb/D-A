@@ -10,10 +10,10 @@ using namespace std;
 int MaxSubSequenceSum_0(std::vector<int> &A)
 {
     int MaxSum = 0, ThisSum;
-    for(int i = 0, i < A.size(); ++i) {
-        for(int j = i; j < A.size(), ++j) {
+    for(size_t i = 0; i < A.size(); ++i) {
+        for(size_t j = i; j < A.size(); ++j) {
             ThisSum = 0;
-            for(int k = i; k <= j; k++) {
+            for(size_t k = i; k <= j; k++) {
                 ThisSum += A[k];
 
                 if(ThisSum > MaxSum)
@@ -27,9 +27,9 @@ int MaxSubSequenceSum_0(std::vector<int> &A)
 
 int MaxSubSequenceSum_1(std::vector<int> &A)
 {
-    int MaxSum = 0, ThisSum;
-    for(int i = 0, j < A.size(); ++i) {
-        for(int j = i, j < A.size(); ++j) {
+    int MaxSum = 0, ThisSum = 0;
+    for(size_t i = 0; i < A.size(); ++i) {
+        for(size_t j = i; j < A.size(); ++j) {
             ThisSum += A[j];
             if(ThisSum > MaxSum)
                 MaxSum = ThisSum;
