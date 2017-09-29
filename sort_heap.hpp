@@ -23,11 +23,39 @@ void max_heapify(int A[], int length, int i)  //维护
     }
 }
 
+void max_heapify2(int A[], int length, int i)  //维护
+{
+    int parent = i;
+    while(true) {
+        int left = parent * 2 + 1;  //节点i的左孩子
+        int right = left + 1; //节点i的右孩子节点
+        int largest = parent;  //默认父节点
+        if (left <= length && A[largest] < A[left])  //左孩子比父节点大
+        {
+            largest = left;
+        }
+        if (right <= length && A[largest] < A[right])  //右孩子最大
+        {
+            largest = right;
+        }
+
+        if (parent != largest)   //最大值不是父节点
+        {
+            std::swap(A[parent], A[largest]);
+            parent = largest;
+        }
+        else {
+            break;
+        }
+    }
+}
+
 void build_max_heap(int A[], int length)  //建堆
 {
     for (int i = length / 2 - 1; i >= 0; i--)
     {
-        max_heapify(A, length, i);
+        // max_heapify(A, length, i);
+        max_heapify2(A, length, i);
     }
 }
 
