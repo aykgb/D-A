@@ -1,8 +1,8 @@
-#include "config.hpp"
-#include "simple_sort.hpp"
-#include "merge_sort.hpp"
-#include "quick_sort.hpp"
-#include "heap_sort.hpp"
+#include "utils.hpp"
+#include "sort_simple.hpp"
+#include "sort_merge.hpp"
+#include "sort_quick.hpp"
+#include "sort_heap.hpp"
 
 int main()
 {

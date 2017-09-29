@@ -1,7 +1,7 @@
 #ifndef _MERGE_SORT_HPP_
 #define _MERGE_SORT_HPP_
 
-#include "config.hpp"
+#include "utils.hpp"
 
 /* Merge two ordered array. */
 void merge(int* A, int p, int q, int r) {
