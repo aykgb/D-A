@@ -1,7 +1,7 @@
 #ifndef _SIMPLE_SORT_HPP_
 #define _SIMPLE_SORT_HPP_
 
-#include "config.hpp"
+#include "utils.hpp"
 
 void buble_sort(int* A, int length) {
     for(int i = 0; i < length; i++) {
