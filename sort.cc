@@ -1,6 +1,7 @@
 #include "config.hpp"
 #include "simple_sort.hpp"
 #include "merge_sort.hpp"
+#include "quick_sort.hpp"
 
 int main()
 {
@@ -14,8 +15,19 @@ int main()
         A[i] = dis(gen);
     }
 
-    // merge_sort(A, 0, LENGTH - 1);
-    // selection_sort(A, LENGTH);
-    buble_sort(A, LENGTH);
+    int B[LENGTH];
+    memmove(B, A, LENGTH * sizeof(int));
     print(A, LENGTH);
+
+    // buble_sort(A, LENGTH);
+    // print(A, LENGTH);
+    // selection_sort(A, LENGTH);
+    // print(A, LENGTH);
+    // insert_sort(A, LENGTH);
+    // print(A, LENGTH);
+    merge_sort(A, 0, LENGTH - 1);
+    print(A, LENGTH);
+
+    quick_sort(B, 0, LENGTH - 1);
+    print(B, LENGTH);
 }
