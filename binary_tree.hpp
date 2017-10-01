@@ -4,6 +4,7 @@
 #include <list>
 #include <vector>
 #include <queue>
+#include <stack>
 #include <memory>
 #include <algorithm>
 
@@ -103,6 +104,39 @@ void traverse_preorder(BiTNode* root, std::vector<int>& path) {
         path.push_back(root->data);
         traverse_preorder(root->lchild, path);
         traverse_preorder(root->rchild, path);
+    }
+}
+
+void traverse_preorder2(BiTNode *root, std::vector<int>& path) {
+    std::stack<BiTNode*> lifo;
+    BiTNode *p = root; // 指示指针
+    while(p != nullptr || !lifo.empty()) {
+        while(p != nullptr) {
+            path.push_back(p->data); // 从左子树开始迭代，迭代左子树的左子树，一直到指示指针为NULL
+            lifo.push(p);
+            p = p->lchild;
+        }
+        if(!lifo.empty()) {
+            p = lifo.top();
+            lifo.pop();
+            p = p->rchild; // 将p指向右子树，对右子树迭代上面的过程
+        }
+    }
+}
+
+void traverse_inorder(BiTNode* root, std::vector<int>& path) {
+    if(root != nullptr) {
+        traverse_inorder(root->lchild, path);
+        path.push_back(root->data);
+        traverse_inorder(root->rchild, path);
+    }
+}
+
+void traverse_postorder(BiTNode* root, std::vector<int>& path) {
+    if(root != nullptr) {
+        traverse_postorder(root->lchild, path);
+        traverse_postorder(root->rchild, path);
+        path.push_back(root->data);
     }
 }
 
