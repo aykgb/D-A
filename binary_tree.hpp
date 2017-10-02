@@ -162,7 +162,6 @@ void traverse_postorder2(BiTNode* root, std::vector<int>& path) {
     // the bool indicates that the node is second time showed on the top of stack.
     std::stack<std::pair<BiTNode*, bool>> s;
     BiTNode* p = root;
-    bool is_first = true;
     while(p != nullptr || !s.empty()) {
         while( p != nullptr ) {
             s.push({p, true}); // it is the first time showed on the top of stack.
@@ -171,7 +170,7 @@ void traverse_postorder2(BiTNode* root, std::vector<int>& path) {
 
         if(!s.empty()) {
             p = s.top().first;
-            is_first = s.top().second;
+            bool is_first = s.top().second;
             s.pop();
             if(is_first) {
                 s.push({p, false});
