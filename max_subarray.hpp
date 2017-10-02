@@ -7,10 +7,10 @@
 using namespace std;
 
 
-/* i, j indicates the range of subsequence which is continuous.
+/* i, j indicates the range of subarray which is continuous.
  *  return tuple {low-bound, high-bound, max-sum}
  */
-std::tuple<int, int, int> max_sub_sequence(int *A, int length)
+std::tuple<int, int, int> max_sub_array(int *A, int length)
 {
     int max_sum = 0, sum = 0, low= 0, high = 0;
     for(int i = 0; i < length; ++i) {
@@ -30,7 +30,7 @@ std::tuple<int, int, int> max_sub_sequence(int *A, int length)
     return std::make_tuple(low, high, max_sum);
 }
 
-std::tuple<int, int, int> max_sub_sequence2(int *A, int length) {
+std::tuple<int, int, int> max_sub_array2(int *A, int length) {
     int max_sum = 0, sum = 0, low = 0, high= 0;
     for(int i = 0; i < length; i++) {
         sum = 0;
@@ -47,7 +47,7 @@ std::tuple<int, int, int> max_sub_sequence2(int *A, int length) {
     return std::make_tuple(low, high, sum);
 }
 
-std::tuple<int, int, int> find_max_crossing_subsequence(int *A, int length) {
+std::tuple<int, int, int> find_max_crossing_subarray(int *A, int length) {
 
 }
 
