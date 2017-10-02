@@ -108,17 +108,17 @@ void traverse_preorder(BiTNode* root, std::vector<int>& path) {
 }
 
 void traverse_preorder2(BiTNode *root, std::vector<int>& path) {
-    std::stack<BiTNode*> lifo;
+    std::stack<BiTNode*> s;
     BiTNode *p = root; // 指示指针
-    while(p != nullptr || !lifo.empty()) {
+    while(p != nullptr || !s.empty()) {
         while(p != nullptr) {
             path.push_back(p->data); // 从左子树开始迭代，迭代左子树的左子树，一直到指示指针为NULL
-            lifo.push(p);
+            s.push(p);
             p = p->lchild;
         }
-        if(!lifo.empty()) {
-            p = lifo.top();
-            lifo.pop();
+        if(!s.empty()) {
+            p = s.top();
+            s.pop();
             p = p->rchild; // 将p指向右子树，对右子树迭代上面的过程
         }
     }
@@ -132,11 +132,55 @@ void traverse_inorder(BiTNode* root, std::vector<int>& path) {
     }
 }
 
+void traverse_inorder2(BiTNode* root, std::vector<int>& path) {
+    std::stack<BiTNode*> s;
+    BiTNode * p = root;
+    while(p != nullptr || !s.empty()) {
+        while(p != nullptr) {
+            s.push(p);
+            p = p->lchild;
+        }
+
+        if(!s.empty()) {
+            p = s.top();
+            s.pop();
+            path.push_back(p->data);
+            p = p->rchild;
+        }
+    }
+}
+
 void traverse_postorder(BiTNode* root, std::vector<int>& path) {
     if(root != nullptr) {
         traverse_postorder(root->lchild, path);
         traverse_postorder(root->rchild, path);
         path.push_back(root->data);
+    }
+}
+
+void traverse_postorder2(BiTNode* root, std::vector<int>& path) {
+    // the bool indicates that the node is second time showed on the top of stack.
+    std::stack<std::pair<BiTNode*, bool>> s;
+    BiTNode* p = root;
+    bool is_first = true;
+    while(p != nullptr || !s.empty()) {
+        while( p != nullptr ) {
+            s.push({p, true}); // it is the first time showed on the top of stack.
+            p = p->lchild;
+        }
+
+        if(!s.empty()) {
+            p = s.top().first;
+            is_first = s.top().second;
+            s.pop();
+            if(is_first) {
+                s.push({p, false});
+                p = p->rchild;
+            } else {
+                path.push_back(p->data);
+                p = nullptr;
+            }
+        }
     }
 }
 
