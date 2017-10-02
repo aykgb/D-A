@@ -20,6 +20,8 @@ int main()
     memmove(B, A, LENGTH * sizeof(int));
     print(A, LENGTH);
 
+
+    tst_merge();
     // buble_sort(A, LENGTH);
     // print(A, LENGTH);
     // selection_sort(A, LENGTH);
@@ -28,10 +30,10 @@ int main()
     // print(A, LENGTH);
     // merge_sort(A, 0, LENGTH - 1);
     // print(A, LENGTH);
-    quick_sort(B, 0, LENGTH - 1);
-    print(B, LENGTH);
-    heap_sort(A, LENGTH - 1);
-    print(A, LENGTH);
+    // quick_sort(B, 0, LENGTH - 1);
+    // print(B, LENGTH);
+    // heap_sort(A, LENGTH - 1);
+    // print(A, LENGTH);
 
     return 0;
 }
