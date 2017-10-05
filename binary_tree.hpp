@@ -124,6 +124,14 @@ void traverse_preorder2(BiTNode *root, std::vector<int>& path) {
     }
 }
 
+int high_of_binary_tree(BiTNode * root) {
+    if(root == nullptr) {
+        return 0;
+    } else {
+        return 1 + std::max(high_of_binary_tree(root->lchild), high_of_binary_tree(root->rchild));
+    }
+}
+
 void traverse_inorder(BiTNode* root, std::vector<int>& path) {
     if(root != nullptr) {
         traverse_inorder(root->lchild, path);
