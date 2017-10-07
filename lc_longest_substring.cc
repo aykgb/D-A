@@ -81,6 +81,32 @@ public:
  * when i = 0, j = 4, s[j] is 'b', hash_set is {'a', 'b', 'c', 'd'} and contains 'b',
  * so erase s[i](i = 0, 1) from hash_set until it does not contain 'b', and do emplace s[j] again.
  * */
+class Solution3 {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int start = 0, len = 0, max_len = 0;
+        std::unordered_set<char> window; // the total characters is limited to 128.
+        for(size_t i = 0; i < s.length(); i++) {
+            auto search = window.find(s[i]);
+            if(search != window.end()) {
+                while(s[start] != s[i]) { // find new start position.
+                    window.erase(s[start++]);  // update hash_set
+                }
+
+                len = i - start + 1; // update len
+            } else {
+                window.emplace(s[i]);
+                len++;
+                if(len > max_len) {
+                    max_len = len;
+                }
+            }
+        }
+
+        return max_len;
+    }
+};
+
 
 
 string stringToString(string input) {
