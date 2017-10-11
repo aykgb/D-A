@@ -6,7 +6,7 @@ using namespace std;
 
 class Solution {
 public:
-    int expandAroundCenter(string s, int L,int R) {
+    int expandAroundCenter(string s, int left, int right) {
         int L = left, R = right;
         while(L >=0 && R < s.length() && s[L] == s[R]) {
             L--;
