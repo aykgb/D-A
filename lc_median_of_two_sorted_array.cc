@@ -6,25 +6,26 @@
 
 using namespace std;
 
+/* time: O(n) space: O(n)*/
 class Solution {
 public:
-    void merge(vector<int>& nums1, vector<int>& nums2, vector<int>& output) {
-        int nums1_length = nums1.size();
-        int nums2_length = nums2.size();
+    void merge(vector<int>& A, vector<int>& B, vector<int>& C) {
+        int lenA = A.size();
+        int lenB = B.size();
         int i = 0, j = 0;
-        while(i < nums1_length || j < nums2_length) {
-            if(i < nums1_length && j < nums2_length) {
-                if(nums1[i] < nums2[j]) {
-                    output.emplace_back(nums1[i++]);
+        while(i < lenA || j < lenB) {
+            if(i < lenA && j < lenB) {
+                if(A[i] < B[j]) {
+                    C.emplace_back(A[i++]);
                 } else {
-                    output.emplace_back(nums2[j++]);
+                    C.emplace_back(B[j++]);
                 }
             } else {
-                while(i < nums1_length) {
-                    output.emplace_back(nums1[i++]);
+                while(i < lenA) {
+                    C.emplace_back(A[i++]);
                 }
-                while(j < nums2_length) {
-                    output.emplace_back(nums2[j++]);
+                while(j < lenB) {
+                    C.emplace_back(B[j++]);
                 }
             }
         }
@@ -47,47 +48,17 @@ public:
     }
 };
 
+/* time: O(n) space: O(1)*/
 class Solution2 {
 public:
-    void merge(vector<int>& nums1, vector<int>& nums2, vector<int>& output) {
-        int nums1_length = nums1.size();
-        int nums2_length = nums2.size();
-        int i = 0, j = 0;
-        while(i < nums1_length || j < nums2_length) {
-            if(i < nums1_length && j < nums2_length) {
-                if(nums1[i] < nums2[j]) {
-                    output.emplace_back(nums1[i++]);
-                } else {
-                    output.emplace_back(nums2[j++]);
-                }
-            } else {
-                while(i < nums1_length) {
-                    output.emplace_back(nums1[i++]);
-                }
-                while(j < nums2_length) {
-                    output.emplace_back(nums2[j++]);
-                }
-            }
-        }
-    }
-
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        // if(nums1.empty() && !nums2.empty()) {
-        //     return nums2.size() % 2 ? nums2[nums2.size() / 2] : (double(nums2[nums2.size() / 2]) + nums2[nums2.size() / 2 - 1]);
-        // }
-        // if(!nums1.empty() && nums2.empty()) {
-        //     return nums1.size() % 2 ? nums1[nums1.size() / 2] : (double(nums1[nums1.size() / 2]) + nums1[nums1.size() / 2 - 1]);
-        // }
-        // if(nums1.empty() && nums2.empty()) {
-        //     return 0;
-        // }
-        if(nums1.size() < nums2.size()) {
-            return findMedianSortedArrays(nums2, nums1);
+    double findMedianSortedArrays(vector<int>& A, vector<int>& B) {
+        if(A.size() < B.size()) {
+            return findMedianSortedArrays(B, A);
         }
 
-        int m = nums1.size();
-        int n = nums2.size();
-        int total_length = m + n;
+        int lenA = A.size();
+        int lenB = B.size();
+        int total_length = lenA + lenB;
         /*Find the suitable i' j' and so that:
         *   if length is odd then the median must be ether nums1[i'] or nums2[j'],
         *   otherwise the median is (x + y) / 2:
@@ -96,9 +67,9 @@ public:
         *   case c: x = (nums1[i'] + nums2[j']) / 2;
         */
         int i = 0, j = 0;
-        while(i < m) {
-            if(j < n) {
-                if(nums1[i] <= nums2[j]) {
+        while(i < lenA) {
+            if(j < lenB) {
+                if(A[i] <= B[j]) {
                     i++;
                 } else {
                     j++;
@@ -112,27 +83,21 @@ public:
             }
         }
 
-        if(m == 0) { // means that both of nums1 and nums2 are empty.
+        std::cout << i << " " << j << std::endl;
+
+        if(lenA == 0) { // means that both of nums1 and nums2 are empty.
             return 0;
         }
 
-        if(n == 0) { // only nums2 is empty.
-            if(m % 2) {
-                return nums1[m / 2]; // odd
+        if(lenB == 0) { // only nums2 is empty.
+            if(lenA % 2) {
+                return A[lenA / 2]; // odd
             } else {
-                return (double(nums1[n / 2]) + nums1[n / 2 - 1]) / 2; // even
+                return (double(A[lenA / 2]) + A[lenA / 2 - 1]) / 2; // even
             }
         }
 
-        std::cout << i << " " << j << std::endl;
-        if(total_length % 2) {
-            if(i == m) return nums2[j - 1];
-            else if(j == n) return std::min(nums1[i - 1], nums2[j - 1]);
-            else return std::min(nums1[i], nums2[j]);
-
-        } else {
-
-        }
+        /*some other cases.*/
 
         return 0;
     }
