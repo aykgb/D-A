@@ -51,97 +51,51 @@ public:
 /* time: O(n) space: O(1)*/
 class Solution2 {
 public:
+    /* 2个排序数组的中位数要么在A中，要么在B中.*/
+    int findKthOfTwoSortedArrays(vector<int>& A, int Ahead, int Atail, vector<int>& B, int Bhead, int Btail, int k) {
+        if(Ahead > Atail) return B[Bhead + k - 1]; // 这种情况说明Kth不在A中
+        if(Bhead > Btail) return A[Ahead + k - 1]; // 这种情况说明Kth不在B中
+
+        int Amid = (Ahead + Atail) / 2;
+        int Bmid = (Bhead + Btail) / 2;
+
+        if(A[Amid] <= B[Bmid]) {
+            if(k <= (Amid - Ahead) + (Bmid - Bhead) + 1) {  // kth 的数值肯定小于B[Bmid]
+                return findKthOfTwoSortedArrays(A, Ahead, Atail, B, Bhead, Bmid - 1, k);
+            } else {                                        // kth 的数值肯定大于A[Amid]
+                return findKthOfTwoSortedArrays(A, Amid + 1, Atail, B, Bhead, Btail, k - (Amid - Ahead + 1));
+            }
+        } else { // B[Amid] < A[Bmid];
+            if(k <= (Amid - Ahead) + (Bmid - Bhead) + 1) {
+                return findKthOfTwoSortedArrays(A, Ahead, Amid - 1, B, Bhead, Btail, k);
+            } else {
+                return findKthOfTwoSortedArrays(A, Ahead, Atail, B, Bmid + 1, Btail, k - (Bmid - Bhead + 1));
+            }
+        }
+     }
+
     double findMedianSortedArrays(vector<int>& A, vector<int>& B) {
-        if(A.size() < B.size()) {
-            return findMedianSortedArrays(B, A);
+        int Alen = A.size();
+        int Blen = B.size();
+
+        int k = (Alen + Blen) / 2 + 1;
+        int v = findKthOfTwoSortedArrays(A, 0, Alen - 1, B, 0, Blen - 1, k);
+        if((Alen + Blen) % 2) {
+            return v;
+        } else {
+            int v1 = findKthOfTwoSortedArrays(A, 0, Alen - 1, B, 0, Blen - 1, k - 1);
+            return double(v + v1)/ 2;
         }
-
-        int lenA = A.size();
-        int lenB = B.size();
-        int total_length = lenA + lenB;
-        /*Find the suitable i' j' and so that:
-        *   if length is odd then the median must be ether nums1[i'] or nums2[j'],
-        *   otherwise the median is (x + y) / 2:
-        *   case a: both of {x, y} are contained on nums1, and median = (nums1[i'] + nums2[i' + 1]) / 2;
-        *   case b: both of {x, y} are contained on nums2, and median = (nums2[j'] + nums2[j' + 1]) / 2;
-        *   case c: x = (nums1[i'] + nums2[j']) / 2;
-        */
-        int i = 0, j = 0;
-        while(i < lenA) {
-            if(j < lenB) {
-                if(A[i] <= B[j]) {
-                    i++;
-                } else {
-                    j++;
-                }
-            } else {
-                i++;
-            }
-
-            if((i + j) > total_length / 2) {
-                break;
-            }
-        }
-
-        std::cout << i << " " << j << std::endl;
-
-        if(lenA == 0) { // means that both of nums1 and nums2 are empty.
-            return 0;
-        }
-
-        if(lenB == 0) { // only nums2 is empty.
-            if(lenA % 2) {
-                return A[lenA / 2]; // odd
-            } else {
-                return (double(A[lenA / 2]) + A[lenA / 2 - 1]) / 2; // even
-            }
-        }
-
-        /*some other cases.*/
-
-        return 0;
     }
 };
 
-
-void trimLeftTrailingSpaces(string &input) {
-    input.erase(input.begin(), find_if(input.begin(), input.end(), [](int ch) {
-        return !isspace(ch);
-    }));
-}
-
-void trimRightTrailingSpaces(string &input) {
-    input.erase(find_if(input.rbegin(), input.rend(), [](int ch) {
-        return !isspace(ch);
-    }).base(), input.end());
-}
-
-vector<int> stringToIntegerVector(string input) {
-    vector<int> output;
-    trimLeftTrailingSpaces(input);
-    trimRightTrailingSpaces(input);
-    input = input.substr(1, input.length() - 2);
-    stringstream ss;
-    ss.str(input);
-    string item;
-    char delim = ',';
-    while (getline(ss, item, delim)) {
-        output.push_back(stoi(item));
-    }
-    return output;
-}
-
 int main() {
-    string line;
-    while (getline(cin, line)) {
-        vector<int> nums1 = stringToIntegerVector(line);
-        getline(cin, line);
-        vector<int> nums2 = stringToIntegerVector(line);
+    std::vector<int> nums1 {1, 2};
+    std::vector<int> nums2 {3, 4};
 
-        double ret = Solution2().findMedianSortedArrays(nums1, nums2);
+    double ret = Solution2().findMedianSortedArrays(nums1, nums2);
 
-        string out = to_string(ret);
-        cout << out << endl;
-    }
+    std::cout << ret << std::endl;
+
     return 0;
 }
