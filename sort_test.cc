@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     std::normal_distribution<> dist{0, 30}; // 正态分布，平均数为0，标准差为100
 
     int arr_len = 20;
-    if(test_perf) arr_len = 5000;
+    if(test_perf) arr_len = 100000;
 
     std::vector<int> vec;
     for(int i = 0; i < arr_len; i++) {
@@ -41,14 +41,18 @@ int main(int argc, char *argv[])
     (void)print_vector;
 
     auto begin = std::chrono::steady_clock::now();
+
     print_vector();
-    // SortQuick::quick_sort(vec, 0, vec.size() - 1);
+    // int p = SortQuick::partition1(vec, 0, vec.size() - 1);
+    // std::cout << "partition index: " << p << std::endl;
+
+    SortQuick::quick_sort(vec, 0, vec.size() - 1);
     // SortSimple::bubble_sort(vec);
     // SortSimple::bubble_sort2(vec);
     // SortSimple::bubble_sort3(vec);
     // SortSimple::insert_sort(vec);
     // SortSimple::insert_sort2(vec);
-    SortSimple::select_sort(vec);
+    // SortSimple::select_sort(vec);
     print_vector();
     auto end = std::chrono::steady_clock::now();
 
