@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void vector<int> subsets(vector<int>& nums, int i, bool eixst, vector<vector<int>>& result) {
+vector<int> subsets(vector<int>& nums, vector<int>& subset, vector<vector<int>>& result) {
 
 }
 
