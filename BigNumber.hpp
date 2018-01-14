@@ -356,7 +356,7 @@ void print_elapsed_time(void)
     printf("## %d.%03d ##\n", secs, (nsecs + 500000) / 1000000);
 }
 
-int main(int argc, char* argv[])
+int test_big_number(int argc, char* argv[])
 {
     string str1;
     string str2;

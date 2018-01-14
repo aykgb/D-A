@@ -120,7 +120,7 @@ void traverse_tree_postorder_nonrecursive(BinTreeNode *root, Visit visit) {
     }
 }
 
-int main()
+int test_bin_tree()
 {
     vector<int> nums {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     BinTreeNode *root = create_tree(nums);
