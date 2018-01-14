@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <tuple>
-#include "utils.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -128,6 +128,13 @@ void tst_find_max_subarray() {
     int low = std::get<0>(result);
     int high = std::get<1>(result);
     int max_sum = std::get<2>(result);
+
+    auto print = [](int *arr, int length) {
+        for(int i = 0; i < length; i++) {
+            std::cout<< *(arr + i) << " ";
+        }
+        std::cout << std::endl;
+    };
 
     print(A, 11);
     print(A + low, high - low + 1);
