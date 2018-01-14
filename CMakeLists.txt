@@ -21,12 +21,6 @@ link_libraries(
     boost_system
     )
 
-
-add_executable(big_number big_number.cc)
-add_executable(binary_search binary_search.cc)
-add_executable(sort sort.cc)
-add_executable(tree tree.cc)
-add_executable(subarray subarray.cc)
 add_executable(lc_longest_palindrome lc_longest_palindrome.cc)
 add_executable(lc_longest_substring lc_longest_substring.cc)
 add_executable(lc_median_of_two_sorted_array lc_median_of_two_sorted_array.cc)
