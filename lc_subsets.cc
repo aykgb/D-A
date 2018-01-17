@@ -44,12 +44,26 @@ public:
             subset.pop_back();
         }
     }
+
+    vector<vector<int>> subsets2(vector<int>& nums) {
+        vector<vector<int>> subsets{{}};
+        for(size_t i = 0; i < nums.size(); i++) {
+            int previousN = subsets.size();
+            for(int j = 0; j < previousN; j++) {
+                vector<int> subset = subsets[j];
+                subset.emplace_back(nums[i]);
+                subsets.emplace_back(subset);
+            }
+        }
+
+        return subsets;
+    }
 };
 
 int main()
 {
     vector<int> nums {1, 2, 3};
-    auto result = Solution().subsets(nums);
+    auto result = Solution().subsets2(nums);
 
     auto print_subsets = [&](){
         std::cout << "[" << std::endl;
