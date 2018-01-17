@@ -1,4 +1,5 @@
 *.orig
+core
 big_number
 a.out
 build
