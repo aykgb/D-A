@@ -13,8 +13,8 @@ void print_result(vector<int>& arr, int begin, int pos, int end);
  */
 void bubble_sort(vector<int>& arr) {
   int size = arr.size();
-  for (int i = 0; i < size - 1; i++) {      //! 需要排size-1趟
-    for (int j = 0; j < size - i - 1; j++) { //! 需要比较size - i次
+  for (int i = 0; i < size - 1; i++) {        //! 需要排size-1趟
+    for (int j = 0; j < size - i - 1; j++) {  //! 需要比较size - i次
       if (arr[j] > arr[j + 1]) {
         std::swap(arr[j], arr[j + 1]);
       }
@@ -28,13 +28,14 @@ void bubble_sort(vector<int>& arr) {
  */
 void select_sort(vector<int>& arr) {
   int size = arr.size();
-  for (int i = 0; i < size - 1; i++) {    //! 需要排size-1趟
+  for (int i = 0; i < size - 1; i++) {  //! 需要排size-1趟
     int pos_max = size - i - 1;
     for (int j = 0; j < size - i - 1; j++) {  //! 需要比较size - i次
       if (arr[j] > arr[pos_max]) {
         pos_max = j;
       }
     }
+    print_result(arr, 0, pos_max, size - i);
     std::swap(arr[pos_max], arr[size - i - 1]);
   }
 }
@@ -50,16 +51,18 @@ void select_sort(vector<int>& arr) {
 void insert_sort(vector<int>& arr) {
   int size = arr.size();
   for (int i = 1; i < size; i++) {
+    int pos = i;
     int ele = arr[i];
-    int j = i - 1;
-    for (; j > -1; j--) {
+    print_result(arr, i, pos, size);
+    for (int j = i - 1; j > -1; j--) {
       if (ele < arr[j]) {
         arr[j + 1] = arr[j];
+        pos = j;
       } else {
         break;
       }
     }
-    arr[j + 1] = ele;
+    arr[pos] = ele;
   }
 }
 
