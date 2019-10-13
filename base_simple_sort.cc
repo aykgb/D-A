@@ -12,10 +12,10 @@ void print_result(vector<int>& arr, int begin, int pos, int end);
  * 遍历元素，不断比较上滤，总共需要排N-1趟，每排完一趟，下次遍历的元素个数就少一个
  */
 void bubble_sort(vector<int>& arr) {
-  int N = arr.size();
+  int size = arr.size();
   bool swaped = false;
-  for (int i = 0; i < N - 1; i++) {  //! 需要排N-1趟
-    for (int j = 0; j < N - i - 1; j++) {
+  for (int i = 0; i < size - 1; i++) {   //! 需要排size-1趟
+    for (int j = 0; j < size - i - 1; j++) { //! 需要比较size - i次
       if (arr[j] > arr[j + 1]) {
         std::swap(arr[j], arr[j + 1]);
         swaped = true;
@@ -34,15 +34,15 @@ void bubble_sort(vector<int>& arr) {
  * 遍历未排序分组，找到最大元素的位置，放到未排序分组的最后一个位置，这样总共需要遍历N-1趟
  */
 void select_sort(vector<int>& arr) {
-  int N = arr.size();
-  for (int i = 0; i < N - 1; i++) {
+  int size = arr.size();
+  for (int i = 0; i < size - 1; i++) {    //! 需要排size-1趟
     int pos_max = 0;
-    for (int j = 0; j < N - i; j++) {  // 每次遍历N-i个元素
+    for (int j = 0; j < size - i; j++) {  //! 需要比较size - i次
       if (arr[j] > arr[pos_max]) {
         pos_max = j;
       }
     }
-    std::swap(arr[pos_max], arr[N - i - 1]);
+    std::swap(arr[pos_max], arr[size - i - 1]);
   }
 }
 
@@ -55,8 +55,8 @@ void select_sort(vector<int>& arr) {
  * 3. 将该待排序元素插入找到的位置
  */
 void insert_sort(vector<int>& arr) {
-  int N = arr.size();
-  for (int i = 1; i < N; i++) {
+  int size = arr.size();
+  for (int i = 1; i < size; i++) {
     int ele = arr[i];
     int j = i - 1;
     for (; j > -1; j--) {
