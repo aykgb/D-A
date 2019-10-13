@@ -13,19 +13,12 @@ void print_result(vector<int>& arr, int begin, int pos, int end);
  */
 void bubble_sort(vector<int>& arr) {
   int size = arr.size();
-  bool swaped = false;
-  for (int i = 0; i < size - 1; i++) {   //! 需要排size-1趟
+  for (int i = 0; i < size - 1; i++) {      //! 需要排size-1趟
     for (int j = 0; j < size - i - 1; j++) { //! 需要比较size - i次
       if (arr[j] > arr[j + 1]) {
         std::swap(arr[j], arr[j + 1]);
-        swaped = true;
       }
     }
-
-    if (!swaped) {  // 如果其中有一次未发生交换，说明已经完全排序好了
-      break;
-    }
-    swaped = false;
   }
 }
 
@@ -36,8 +29,8 @@ void bubble_sort(vector<int>& arr) {
 void select_sort(vector<int>& arr) {
   int size = arr.size();
   for (int i = 0; i < size - 1; i++) {    //! 需要排size-1趟
-    int pos_max = 0;
-    for (int j = 0; j < size - i; j++) {  //! 需要比较size - i次
+    int pos_max = size - i - 1;
+    for (int j = 0; j < size - i - 1; j++) {  //! 需要比较size - i次
       if (arr[j] > arr[pos_max]) {
         pos_max = j;
       }
