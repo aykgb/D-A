@@ -128,11 +128,11 @@ void test_quick_sort(int length, int method = 1) {
       std::cout << arr[i] << " ";
     }
   } else {
-    for (auto i = 0; i < MAX_DISPLAY_SIZE/2; i++) {
+    for (auto i = 0; i < MAX_DISPLAY_SIZE / 2; i++) {
       std::cout << arr[i] << " ";
     }
     std::cout << " ... ";
-    for (auto i = 0; i < MAX_DISPLAY_SIZE/2; i++) {
+    for (auto i = 0; i < MAX_DISPLAY_SIZE / 2; i++) {
       std::cout << arr[arr.size() - 10 + i] << " ";
     }
   }
