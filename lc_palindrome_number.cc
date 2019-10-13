@@ -50,17 +50,17 @@ public:
         }
 
         // 计算输入整数的长度
-        int nums = 0;
+        int arr = 0;
         int x1 = x;
         while(x1) {
-            nums++;
+            arr++;
             x1 = x1 / 10;
         }
 
         // 使用双指针法，分别从头和尾迭代到中间，逐次比较是否相同，若有一个不相同，就不是回文数
-        for(int i = 1; i <= nums/2; i++) {
+        for(int i = 1; i <= arr/2; i++) {
             int low = get_digit_on_position(x, i);
-            int high = get_digit_on_position(x, nums - i + 1);
+            int high = get_digit_on_position(x, arr - i + 1);
             if( low != high) {
                 return false;
             }

@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
     std::mt19937 gen(rd());
     std::normal_distribution<> dist{0, range}; // 正态分布，平均数为0，标准差为100
 
-    int arr_len = 20;
+    int arr_len = MAX_DISPLAY_SIZE;
     if(test_perf) {
         if(argc > 3) {
             arr_len= atoi(argv[3]);

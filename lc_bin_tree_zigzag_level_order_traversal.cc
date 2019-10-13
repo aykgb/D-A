@@ -44,12 +44,12 @@ public:
     }
 };
 
-TreeNode* create_tree(vector<int>& nums, size_t pos = 0) {
+TreeNode* create_tree(vector<int>& arr, size_t pos = 0) {
     TreeNode *root = nullptr;
-    if(pos < nums.size()) {
-        root = new TreeNode(nums[pos]);
-        root->left = create_tree(nums, 2 * pos + 1);
-        root->right = create_tree(nums, 2 * pos + 2);
+    if(pos < arr.size()) {
+        root = new TreeNode(arr[pos]);
+        root->left = create_tree(arr, 2 * pos + 1);
+        root->right = create_tree(arr, 2 * pos + 2);
     }
 
     return root;
@@ -58,9 +58,9 @@ TreeNode* create_tree(vector<int>& nums, size_t pos = 0) {
 
 int main()
 {
-    vector<int> nums{0, 1, 2, 3, 4, 5, 6};
+    vector<int> arr{0, 1, 2, 3, 4, 5, 6};
 
-    TreeNode *root = create_tree(nums);
+    TreeNode *root = create_tree(arr);
 
     auto result = Solution().zigzagLevelOrder(root);
 

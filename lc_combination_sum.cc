@@ -17,15 +17,15 @@ public:
         return result;
     }
 
-    void dfs(vector<int>& nums, int start, vector<int>& ans, vector<vector<int>>& result, int target) {
+    void dfs(vector<int>& arr, int start, vector<int>& ans, vector<vector<int>>& result, int target) {
         if(target == 0) {
             result.emplace_back(ans);
             return;
         }
 
-        for(size_t i = start; i < nums.size() && nums[i] <= target; i++) {
-            ans.emplace_back(nums[i]);
-            dfs(nums, i, ans, result, target - nums[i]);
+        for(size_t i = start; i < arr.size() && arr[i] <= target; i++) {
+            ans.emplace_back(arr[i]);
+            dfs(arr, i, ans, result, target - arr[i]);
             ans.pop_back();
         }
     }
@@ -49,18 +49,18 @@ public:
         return sum;
     }
 
-    void find_subsets(vector<int>& nums, vector<vector<int>>& result, int target) {
+    void find_subsets(vector<int>& arr, vector<vector<int>>& result, int target) {
         // subsets的初始状态，只含有一个空集
         vector<vector<int>> subsets{{}};
         // 逐个考察nums中的元素
-        for(size_t i = 0; i < nums.size() && nums[i] <= target; i++) {
+        for(size_t i = 0; i < arr.size() && arr[i] <= target; i++) {
             int previousN = subsets.size();
             // 逐个拿出原有subsets中的subset，放入索引i指向的元素后，再添加到subsets中。
             for(int j = 0; j < previousN; j++) {
                 vector<int> subset = subsets[j];
-                int count = (target - sumof(subset)) / nums[i];  // i指向的元素最多可重复次数
+                int count = (target - sumof(subset)) / arr[i];  // i指向的元素最多可重复次数
                 for(int k = 0; k < count; k++) {
-                    subset.emplace_back(nums[i]);
+                    subset.emplace_back(arr[i]);
                     if(sumof(subset) > target) {    // 跳过，不再向下搜索，也不加入subsets中
                         break;
                     }
@@ -78,10 +78,10 @@ public:
 
 int main()
 {
-    vector<int> nums{1, 2, 3, 4, 5, 6, 7};
+    vector<int> arr{1, 2, 3, 4, 5, 6, 7};
     int target = 7;
 
-    auto result = Solution().combinationSum(nums, target);
+    auto result = Solution().combinationSum(arr, target);
     auto print_subsets = [&](){
         std::cout << "[" << std::endl;
         for(auto &subset : result) {

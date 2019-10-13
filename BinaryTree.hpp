@@ -15,12 +15,12 @@ struct BinTreeNode {
 
 using Visit = std::function<void(BinTreeNode *)>;
 
-BinTreeNode* create_tree(vector<int>& nums, size_t pos = 0) {
+BinTreeNode* create_tree(vector<int>& arr, size_t pos = 0) {
     BinTreeNode *root = nullptr;
-    if(pos < nums.size()) {
-        root = new BinTreeNode(nums[pos]);
-        root->lchild = create_tree(nums, 2 * pos + 1);
-        root->rchild = create_tree(nums, 2 * pos + 2);
+    if(pos < arr.size()) {
+        root = new BinTreeNode(arr[pos]);
+        root->lchild = create_tree(arr, 2 * pos + 1);
+        root->rchild = create_tree(arr, 2 * pos + 2);
     }
 
     return root;
@@ -122,8 +122,8 @@ void traverse_tree_postorder_nonrecursive(BinTreeNode *root, Visit visit) {
 
 int test_bin_tree()
 {
-    vector<int> nums {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    BinTreeNode *root = create_tree(nums);
+    vector<int> arr {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    BinTreeNode *root = create_tree(arr);
     traverse_tree_preorder(root, [](BinTreeNode* node){ std::cout << node->val << " "; });
     std::cout << std::endl;
     traverse_tree_preorder_nonrecursive(root, [](BinTreeNode* node){ std::cout << node->val << " "; });

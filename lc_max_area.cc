@@ -26,8 +26,8 @@ public:
 
 int main()
 {
-    std::vector<int> nums {1, 2, 3, 0, 1, 2, 5};
-    int res = Solution().maxArea(nums);
+    std::vector<int> arr {1, 2, 3, 0, 1, 2, 5};
+    int res = Solution().maxArea(arr);
     std::cout << "max area:" << res << std::endl;
 
     return 0;

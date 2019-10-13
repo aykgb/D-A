@@ -8,15 +8,15 @@ using namespace std;
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
+    vector<int> twoSum(vector<int>& arr, int target) {
         std::unordered_map<int, int> hash_map;
-        for(size_t i = 0; i < nums.size(); i++) {
-            hash_map.emplace(nums[i], i);
+        for(size_t i = 0; i < arr.size(); i++) {
+            hash_map.emplace(arr[i], i);
         }
 
-        int length = nums.size();
+        int length = arr.size();
         for(int i = 0; i < length; i++) {
-            int key = nums[i];
+            int key = arr[i];
             int remains = target - key;
             auto search = hash_map.find(remains);
             if(search != hash_map.end() && search->second != i) {
@@ -75,11 +75,11 @@ string integerVectorToString(vector<int> list, int length = -1) {
 int main() {
     string line;
     while (getline(cin, line)) {
-        vector<int> nums = stringToIntegerVector(line);
+        vector<int> arr = stringToIntegerVector(line);
         getline(cin, line);
         int target = stringToInteger(line);
 
-        vector<int> ret = Solution().twoSum(nums, target);
+        vector<int> ret = Solution().twoSum(arr, target);
 
         string out = integerVectorToString(ret);
         cout << out << endl;

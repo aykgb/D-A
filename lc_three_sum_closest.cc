@@ -11,21 +11,21 @@ class Solution {
 public:
 
     // 消耗时间过长，导致超时
-    int threeSumClosest(vector<int>& nums, int target) {
+    int threeSumClosest(vector<int>& arr, int target) {
         vector<int> three;
-        int best = nums[0] + nums[1] + nums[2];
-        dfs(nums, 0, three, target, best);
+        int best = arr[0] + arr[1] + arr[2];
+        dfs(arr, 0, three, target, best);
 
         return best;
     }
 
-    void dfs(vector<int>& nums, size_t start, vector<int>& three, int target, int& best) {
-        for(size_t i = start; i < nums.size(); i++) {
+    void dfs(vector<int>& arr, size_t start, vector<int>& three, int target, int& best) {
+        for(size_t i = start; i < arr.size(); i++) {
             if(three.size() > 3) { // 实现剪枝动作
                 continue;
             }
 
-            three.push_back(nums[i]);
+            three.push_back(arr[i]);
 
             if(three.size() == 3) {
                 for(auto & e: three) {
@@ -37,29 +37,29 @@ public:
                     best = sum;
                 }
             }
-            dfs(nums, i + 1, three, target, best);
+            dfs(arr, i + 1, three, target, best);
             three.pop_back();
         }
     }
 
 #if 0 // 错误的方法，不能够完全遍历所有可能
     // 排序、使用3个指针
-    int threeSumClosest2(vector<int>& nums, int target) {
-        int len = nums.size();
+    int threeSumClosest2(vector<int>& arr, int target) {
+        int len = arr.size();
         if(len == 3) {
-            return nums[0] + nums[1] + nums[2];
+            return arr[0] + arr[1] + arr[2];
         }
 
-        std::sort(nums.begin(), nums.end());
+        std::sort(arr.begin(), arr.end());
         int first = 0, second = 1, third = 2;
-        int sum = nums[first] + nums[second] + nums[third];
+        int sum = arr[first] + arr[second] + arr[third];
         if(sum >= target) return sum;
         third++;
 
-        int twoSum = nums[first] + nums[second];
+        int twoSum = arr[first] + arr[second];
         int preSum = sum;
         while(third < len) {
-            sum = twoSum + nums[third];
+            sum = twoSum + arr[third];
 
             if(sum == target) return sum;
             if(sum > target) {
@@ -76,9 +76,9 @@ public:
         }
         third--;
 
-        twoSum = nums[first] + nums[third];
+        twoSum = arr[first] + arr[third];
         while(second < third) {
-            sum = twoSum + nums[second];
+            sum = twoSum + arr[second];
 
             if(sum == target) return sum;
             if(sum > target) {
@@ -95,9 +95,9 @@ public:
         }
         second--;
 
-        twoSum = nums[second] + nums[third];
+        twoSum = arr[second] + arr[third];
         while(first < second) {
-            sum = twoSum + nums[first];
+            sum = twoSum + arr[first];
 
             if(sum == target) return sum;
             if(sum > target) {
@@ -120,21 +120,21 @@ public:
 #endif
 
     // 排序、使用3个指针
-    int threeSumClosest3(vector<int>& nums, int target) {
-        if(nums.size() == 3) {
-            return nums[0] + nums[1] + nums[2];
+    int threeSumClosest3(vector<int>& arr, int target) {
+        if(arr.size() == 3) {
+            return arr[0] + arr[1] + arr[2];
         }
 
-        std::sort(nums.begin(), nums.end());
-        int sum = nums[0] + nums[1] + nums[2];
+        std::sort(arr.begin(), arr.end());
+        int sum = arr[0] + arr[1] + arr[2];
         if(sum >= target) {
             return sum;
         }
 
         // sum < target;
-        int len = nums.size();
+        int len = arr.size();
         for(int first = 0; first < len - 2; first++){            // 固定其中一个数
-            if(first > 0 && nums[first] == nums[first - 1]) {    // 跳过重复的数
+            if(first > 0 && arr[first] == arr[first - 1]) {    // 跳过重复的数
                 continue;
             }
 
@@ -142,7 +142,7 @@ public:
             int second = first + 1;
             int third = len - 1;
             while(second < third) {
-                int thisSum = nums[first] + nums[second] + nums[third];
+                int thisSum = arr[first] + arr[second] + arr[third];
                 if(std::abs(thisSum - target) < std::abs(sum - target)) {
                     sum = thisSum;
                     if(sum == target) {
@@ -164,10 +164,10 @@ public:
 
 int main()
 {
-    std::vector<int> nums {1, 1, 1, 1};
+    std::vector<int> arr {1, 1, 1, 1};
     int target = 3;
 
-    int res = Solution().threeSumClosest3(nums, target);
+    int res = Solution().threeSumClosest3(arr, target);
 
     std::cout << res << std::endl;
 

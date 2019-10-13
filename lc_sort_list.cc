@@ -111,10 +111,10 @@ public:
     }
 };
 
-ListNode* create_list(vector<int>&& nums) {
+ListNode* create_list(vector<int>&& arr) {
     ListNode *head = new ListNode(0);
     ListNode *t = head;
-    for(auto & e: nums) {
+    for(auto & e: arr) {
         t->next = new ListNode(e);
         t = t->next;
     }
@@ -135,8 +135,8 @@ void destroy_list(ListNode*& head) {
 
 int main()
 {
-    vector<int> nums {2, 1};
-    ListNode *head = create_list(std::move(nums));
+    vector<int> arr {2, 1};
+    ListNode *head = create_list(std::move(arr));
     auto print_list = [](ListNode *head) {
         while(head) {
             std::cout << head->val << " ";

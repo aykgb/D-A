@@ -5,25 +5,25 @@ using namespace std;
 
 class Solution {
 public:
-    int removeDuplicates(vector<int>& nums) {
-        int N = nums.size();
+    int removeDuplicates(vector<int>& arr) {
+        int N = arr.size();
         if(N < 2) {
             return N;
         }
 
         int k = 0;
         for(int i = 1; i < N; i++) {
-            if(nums[i] != nums[i - 1]) {
+            if(arr[i] != arr[i - 1]) {
                 k++;
                 if(k != i) {
-                    nums[k] = nums[i];
+                    arr[k] = arr[i];
                 }
             }
         }
 
         int l = k;
         while(++l < N) {
-            nums.erase(nums.begin() + k + 1);
+            arr.erase(arr.begin() + k + 1);
         }
 
         return k;
@@ -32,9 +32,9 @@ public:
 
 int main()
 {
-    std::vector<int> nums{1, 1, 1};
+    std::vector<int> arr{1, 1, 1};
 
-    Solution().removeDuplicates(nums);
+    Solution().removeDuplicates(arr);
 
     return 0;
 }

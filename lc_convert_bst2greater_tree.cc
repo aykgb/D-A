@@ -42,7 +42,7 @@ public:
 
 int main()
 {
-    vector<int> nums{5, 2, 13};
+    vector<int> arr{5, 2, 13};
     TreeNode* root = new TreeNode(5);
     root->left = new TreeNode(2);
     root->right= new TreeNode(13);
