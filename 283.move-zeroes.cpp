@@ -14,6 +14,7 @@ using namespace std;
 // @lc code=start
 class Solution {
  public:
+ // 1. 类似快排的partition算法，0 和 非0 划分为2部分，遍历作交换
   void moveZeroes2(vector<int>& nums) {
     int lastNonZero = -1;  // 指向非0元素最后一个位置
     for (size_t i = 0; i < nums.size(); i++) {
@@ -27,6 +28,7 @@ class Solution {
     }
   }
 
+  // 2. 遍历数组将非0元素按顺序放即可，原位覆盖，记录非0元素个数
   void moveZeroes(vector<int>& nums) {
     int count = 0;  // 非0元素个数
     for (size_t i = 0; i < nums.size(); i++) {

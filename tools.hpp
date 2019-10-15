@@ -6,9 +6,12 @@
 using namespace std;
 const int MAX_DISPLAY_SIZE = 20;
 
-static bool enable_print_result = false;
+static bool enable_print_result = true;
+
+#define PRINT_RESULT
 
 void EnablePrintResult() { enable_print_result = true; }
+void DisablePrintResult() { enable_print_result = false; }
 
 void print_result(vector<int>& arr, int begin, int pos, int end) {
   if (!enable_print_result) {
