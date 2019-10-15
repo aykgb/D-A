@@ -3,10 +3,9 @@
 #include <stack>
 #include <vector>
 
-using namespace std;
+#include "tools.hpp"
 
-const int MAX_DISPLAY_SIZE = 20;
-void print_result(vector<int>& arr, int begin, int pos, int end);
+using namespace std;
 
 int partition(vector<int>& arr, int begin, int end);
 int partition2(vector<int>& arr, int begin, int end);
@@ -121,50 +120,9 @@ void test_quick_sort(int length, int method = 1) {
   printf("quick sort %d int numbers cost %lld.%03lld seconds\n", length,
          duration / chrono::seconds(1),
          duration % chrono::seconds(1) / chrono::milliseconds(1));
+  print_result_summary(arr);
 
-  printf("result: ");
-  if (arr.size() <= MAX_DISPLAY_SIZE) {
-    for (auto i = 0; i < arr.size(); i++) {
-      std::cout << arr[i] << " ";
-    }
-  } else {
-    for (auto i = 0; i < MAX_DISPLAY_SIZE / 2; i++) {
-      std::cout << arr[i] << " ";
-    }
-    std::cout << " ... ";
-    for (auto i = 0; i < MAX_DISPLAY_SIZE / 2; i++) {
-      std::cout << arr[arr.size() - 10 + i] << " ";
-    }
-  }
-  std::cout << "\n\n";
   return;
-}
-
-void print_result(vector<int>& arr, int begin, int pos, int end) {
-  if (arr.size() > MAX_DISPLAY_SIZE) {
-    return;
-  }
-  static int count;
-  if (pos == -1) {
-    count = 0;
-  }
-  printf("%2d@ ", count);
-  for (auto i = 0; i < arr.size(); i++) {
-    if (i == begin) {
-      std::cout << "( ";
-    }
-    if (i != pos) {
-      std::cout << arr[i] << " ";
-    } else {
-      std::cout << "[" << arr[i] << "] ";
-    }
-    if (i + 1 == end) {
-      std::cout << ") ";
-    }
-  }
-  printf("  #begin:%d pos:%d end:%d", begin, pos, end);
-  count++;
-  std::cout << endl;
 }
 
 int main(int argc, char* argv[]) {

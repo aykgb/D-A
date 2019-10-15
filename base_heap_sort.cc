@@ -5,10 +5,9 @@
 #include <string>
 #include <vector>
 
-using namespace std;
+#include "tools.hpp"
 
-const int MAX_DISPLAY_SIZE = 20;
-void print_result(vector<int>& arr, int begin, int pos, int end);
+using namespace std;
 
 static int lhs(int i) { return 2 * i + 1; }
 static int rhs(int i) { return 2 * i + 2; }
@@ -126,50 +125,10 @@ void test_heap_sort(int length, int method = 1) {
          method, length, duration / chrono::seconds(1),
          duration % chrono::seconds(1) / chrono::milliseconds(1));
 
-  printf("result: ");
-  if (arr.size() <= MAX_DISPLAY_SIZE) {
-    for (auto i = 0; i < arr.size(); i++) {
-      std::cout << arr[i] << " ";
-    }
-  } else {
-    for (auto i = 0; i < MAX_DISPLAY_SIZE / 2; i++) {
-      std::cout << arr[i] << " ";
-    }
-    std::cout << " ... ";
-    for (auto i = 0; i < MAX_DISPLAY_SIZE / 2; i++) {
-      std::cout << arr[arr.size() - 10 + i] << " ";
-    }
-  }
-  std::cout << "\n\n";
+  print_result_summary(arr);
   return;
 }
 
-void print_result(vector<int>& arr, int begin, int pos, int end) {
-  if (arr.size() > MAX_DISPLAY_SIZE) {
-    return;
-  }
-  static int count_;
-  if (pos == -1) {
-    count_ = 0;
-  }
-  printf("%2d@ ", count_);
-  for (auto i = 0; i < arr.size(); i++) {
-    if (i == begin) {
-      std::cout << "( ";
-    }
-    if (i != pos) {
-      std::cout << arr[i] << " ";
-    } else {
-      std::cout << "[" << arr[i] << "] ";
-    }
-    if (i + 1 == end) {
-      std::cout << ") ";
-    }
-  }
-  printf("  #begin:%d pos:%d end:%d", begin, pos, end);
-  count_++;
-  std::cout << endl;
-}
 
 int main(int argc, char* argv[]) {
   if (argc < 2) {
