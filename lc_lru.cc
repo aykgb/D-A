@@ -44,7 +44,7 @@ class LRUCache {
   int counter;
 
   /* 用于查询，和实现在list中O(1)的插入删除数据. */
-  std::unordered_map<int, CacheNode *> cache_map;
+  std::unordered_map<int, CacheNode *> map_key2node;
 
  public:
   LRUCache(int capacity) : counter(capacity) {
@@ -64,8 +64,8 @@ class LRUCache {
   }
 
   int get(int key) {
-    auto iter = cache_map.find(key);
-    if (iter == cache_map.end()) {
+    auto iter = map_key2node.find(key);
+    if (iter == map_key2node.end()) {
       return -1;
     }
 
@@ -78,7 +78,7 @@ class LRUCache {
 
   void put(int key, int value) {
     if (get(key) != -1) {
-      CacheNode *node = cache_map[key];
+      CacheNode *node = map_key2node[key];
       node->value = value;
       return;
     }
@@ -87,13 +87,13 @@ class LRUCache {
     CacheNode *node = new CacheNode(key, value);
     insert_from_head(node);
     // 更新cache_map
-    cache_map.emplace(key, node);
+    map_key2node.emplace(key, node);
     // 更新计数
     if (counter) {
       counter--;
     } else {
       CacheNode *node = tail->prev;
-      cache_map.erase(node->key);
+      map_key2node.erase(node->key);
       remove(node);
     }
   }
