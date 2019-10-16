@@ -13,6 +13,8 @@
 #include "SortMerge.hpp"
 #include "SortHeap.hpp"
 
+#include "tools.hpp"
+
 #if 0
 #include "boost/variant.hpp"
 using sort_method_type_i = std::function<void(std::vector<int>&)>;
