@@ -59,20 +59,25 @@ using namespace std;
 class LRUCache {
   typedef std::pair<int, int> Node;
 
+  int count_;
   int capacity_;
   std::list<Node> data_;  // !必须是kv pair，其中的k用于从hashmap中反查节点指针
-  unordered_map<int, std::list<Node>::iterator> map_key2node_;
+  unordered_map<int, std::list<Node>::iterator> map_key_node_;
 
  public:
-  LRUCache(int capacity) : capacity_(capacity) {}
+  LRUCache(int capacity) : count_(0), capacity_(capacity) {}
+
+  int count() {
+    return count_;
+  }
 
   int get(int key) {
-    auto search = map_key2node_.find(key);
+    auto search = map_key_node_.find(key);
     // 1. 先查key
-    if (search != map_key2node_.end()) {
+    if (search != map_key_node_.end()) {
       // 1.1. 找到key，更新key对应节点位置
       data_.splice(data_.begin(), data_, search->second);
-      map_key2node_[key] = data_.begin();
+      map_key_node_[key] = data_.begin();
       return data_.front().second;
     }
     // 1.2 否则返回-1
@@ -83,21 +88,22 @@ class LRUCache {
     // 1. 先查找key
     if (get(key) != -1) {
       // 找到key，更新key对应的值
-      map_key2node_[key]->second = value;
+      map_key_node_[key]->second = value;
       return;
     }
     // 2. 否者判断cache容量
     if (capacity_ == 0) {
       // 容量不够删除尾节点
-      map_key2node_.erase(data_.back().first);
+      map_key_node_.erase(data_.back().first);
       data_.pop_back();
     } else {
       // 还有容量，容量值减一
       capacity_--;
+      count_++;
     }
     // 3. 插入新的节点
     data_.emplace_front(Node(key, value));
-    map_key2node_.emplace(key, data_.begin());
+    map_key_node_.emplace(key, data_.begin());
 
     return;
   }
@@ -124,17 +130,16 @@ class LRUCache {
  */
 // @lc code=end
 
-void cache_get(LRUCache *cache, int key) {
-  std::cout << "get " << key << ":" << cache->get(key) << std::endl;  // returns 3
+void cache_get(LRUCache* cache, int key) {
+  std::cout << "get " << key << ":" << cache->get(key) << std::endl;
   cache->dump();
 }
 
-void cache_put(LRUCache *cache, int key, int value) {
+void cache_put(LRUCache* cache, int key, int value) {
   cache->put(key, value);
-  std::cout << "put " << key << ":" << value << std::endl;  // returns 3
+  std::cout << "put " << key << ":" << value << std::endl;
   cache->dump();
 }
-
 
 void test_lru_case00() {
   LRUCache* cache = new LRUCache(2);
