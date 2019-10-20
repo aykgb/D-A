@@ -57,10 +57,7 @@ class Solution {
 #ifdef PRINT_RESULT
       print_result(height, i, -1, j);
 #endif
-      auto area = (j - i) * min(height[i], height[j]);
-      if (area > max_area) {
-        max_area = area;
-      }
+      max_area = std::max(max_area, (j - i) * std::min(height[i], height[j]));
       (height[i] < height[j]) ? i++ : j--;
     }
     return max_area;
