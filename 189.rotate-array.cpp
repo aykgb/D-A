@@ -81,8 +81,7 @@ class Solution {
       int temp = nums[start];
       int current = start;
       do {
-        int next =
-            (current - k) >= 0 ? (current - k) : (current - k + nums.size());
+        int next = (current - k) >= 0 ? (current - k) : (current - k + nums.size());
         if (next == start) {
           nums[current] = temp;
         } else {
