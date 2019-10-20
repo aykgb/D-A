@@ -49,22 +49,21 @@ class Solution {
     int left_height = height[0];
     for (int i = 1, j = height.size() - 2; i <= j;) { //! 由于left/right_height落后i、j，故i，j需要相遇
       if (left_height < right_height) {
-        if (height[i] > left_height) {
-          left_height = height[i];
-        } else {
+        if (left_height > height[i]) {
           max_trapped_water += left_height - height[i];
+        } else {
+          left_height = height[i];
         }
         i++;
       } else {
-        if (height[j] > right_height) {
-          right_height = height[j];
-        } else {
+        if (right_height > height[j]) {
           max_trapped_water += right_height - height[j];
+        } else {
+          right_height = height[j];
         }
         j--;
       }
     }
-
     return max_trapped_water;
   }
 };

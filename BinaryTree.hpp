@@ -7,9 +7,9 @@
 using namespace std;
 
 struct BinTreeNode {
-    int val;
     BinTreeNode *lchild;
     BinTreeNode *rchild;
+    int val;
     BinTreeNode(int v): val(v), lchild(nullptr), rchild(nullptr) {  }
 };
 
