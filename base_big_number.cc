@@ -240,7 +240,7 @@ string multiple(string str1, string str2)
 
         /* Keep the right dislocation. */
         tmp.insert(tmp.begin(), i, 0);
-        std::cout << "tmp: " << digits2chars(tmp) << std::endl;
+        // std::cout << "tmp: " << digits2chars(tmp) << std::endl;
 
         /* Accumulate the tmp to res in every loop. */
         res = _add(tmp, res);
@@ -356,7 +356,7 @@ void print_elapsed_time(void)
     printf("## %d.%03d ##\n", secs, (nsecs + 500000) / 1000000);
 }
 
-int test_big_number(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     string str1;
     string str2;
