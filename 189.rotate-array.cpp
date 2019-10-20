@@ -57,16 +57,41 @@ class Solution {
  public:
   void rotate(vector<int>& nums, int k) {
     k = k % nums.size();
-    int count = 0, start = 0;
+    int count = 0, start = nums.size() - 1;
     while (count < nums.size()) {
-      int current = start, temp = nums[current];
+      int temp = nums[start];
+      int current = start;
+      int next = (current - k) >= 0 ? (current - k) : (current - k + nums.size());
+      while(next != start) {
+          nums[current] = nums[next];
+          current = next;
+          next = (current - k) >= 0 ? (current - k) : (current - k + nums.size());
+          count++;
+      }
+      nums[current] = temp;
+      count++;
+      start--;
+    }
+  }
+
+  void rotate4(vector<int>& nums, int k) {
+    k = k % nums.size();
+    int count = 0, start = nums.size() - 1;
+    while (count < nums.size()) {
+      int temp = nums[start];
+      int current = start;
       do {
-        int next = (current + k) % nums.size();
-        std::swap(temp, nums[next]);
+        int next =
+            (current - k) >= 0 ? (current - k) : (current - k + nums.size());
+        if (next == start) {
+          nums[current] = temp;
+        } else {
+          nums[current] = nums[next];
+        }
         current = next;
         count++;
       } while (current != start);
-      start++;
+      start--;
     }
   }
 
