@@ -3,11 +3,11 @@
 
 using namespace std;
 
-struct TreeNode {
+struct BinTreeNode {
     int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    BinTreeNode *lchild;
+    BinTreeNode *rchild;
+    BinTreeNode(int x) : val(x), lchild(NULL), rchild(NULL) {}
 };
 
 class Solution {
@@ -15,9 +15,9 @@ public:
     // 分治法，不断的找根节点
     // len 表示以root为根节点的树，其节点的个数
     // pos 根节点值在数组中的索引
-    void preorderTreeBuilder(TreeNode* &root, vector<int>& arr, int pos, int len) {
+    void preorderTreeBuilder(BinTreeNode* &root, vector<int>& arr, int pos, int len) {
         if(len > 0) {
-            root = new TreeNode(arr[pos]);
+            root = new BinTreeNode(arr[pos]);
             if(pos == 0 || pos == (int)arr.size()) {
                 return;
             }
@@ -26,27 +26,27 @@ public:
             // 左子树根节点值的相对索引 = (len_lpart - 1) /  2
             // 左子树在数组中的所有元素的起始全局索引 为 pos - len_lpart
             // 起始全局索引 + 相对索引 得到 全局索引
-            preorderTreeBuilder(root->left, arr, pos - len_lpart + (len_lpart - 1) / 2, len_lpart);
+            preorderTreeBuilder(root->lchild, arr, pos - len_lpart + (len_lpart - 1) / 2, len_lpart);
 
             int len_rpart = (len - 1) - len_lpart;
             // 右子树根节点值的相对索引 = (len_rpart - 1) /  2
             // 右子树在数组中的所有元素的起始全局索引 为 pos + 1
             // 起始全局索引 + 相对索引 得到 全局索引
-            preorderTreeBuilder(root->right, arr, pos + 1 + (len_rpart  - 1)/ 2, len_rpart);
+            preorderTreeBuilder(root->rchild, arr, pos + 1 + (len_rpart  - 1)/ 2, len_rpart);
         }
     }
 
-    void inorderTraversal(TreeNode* root) {
+    void inorderTraversal(BinTreeNode* root) {
         if(root != nullptr) {
-            inorderTraversal(root->left);
+            inorderTraversal(root->lchild);
             std::cout << root->val << " ";
-            inorderTraversal(root->right);
+            inorderTraversal(root->rchild);
         }
     }
 
-    TreeNode* sortedArrayToBST(vector<int>& arr) {
+    BinTreeNode* sortedArrayToBST(vector<int>& arr) {
         int len = arr.size();
-        TreeNode *root = nullptr;
+        BinTreeNode *root = nullptr;
         // 根节点值所在数组中的索引始终是中间或中间偏左的位置。
         preorderTreeBuilder(root, arr, (len - 1) / 2, len);
 
@@ -58,7 +58,7 @@ int main()
 {
     vector<int> sorted { 1, 2, 3, 4, 5, 6, 7 };
 
-    TreeNode* root = Solution().sortedArrayToBST(sorted);
+    BinTreeNode* root = Solution().sortedArrayToBST(sorted);
     Solution().inorderTraversal(root);
     std::cout << std::endl;
 

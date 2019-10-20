@@ -5,41 +5,36 @@
 #include <sstream>
 #include <algorithm>
 
-using namespace std;
+#include "base_binary_tree.h"
 
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
+using namespace std;
 
 class Solution {
 public:
-    TreeNode* findLegalRoot(TreeNode* root, int L, int R) {
+    BinTreeNode* findLegalRoot(BinTreeNode* root, int L, int R) {
         // 移动到合适的根节点
         while(root && root->val > R) {
-                root = root->left;
+                root = root->lchild;
         }
 
         while(root && root->val < L) {
-            root = root->right;
+            root = root->rchild;
         }
 
         return root;
     }
 
-    TreeNode* trimBST(TreeNode* root, int L, int R) {
+    BinTreeNode* trimBST(BinTreeNode* root, int L, int R) {
         if(root == nullptr) return nullptr;
         if(root->val > R) {
-            return trimBST(root->left, L, R);
+            return trimBST(root->lchild, L, R);
         }
         if(root->val < L) {
-            return trimBST(root->right, L, R);
+            return trimBST(root->rchild, L, R);
         }
 
-        root->left = trimBST(root->left, L, R);
-        root->right = trimBST(root->right, L, R);
+        root->lchild = trimBST(root->lchild, L, R);
+        root->rchild = trimBST(root->rchild, L, R);
 
         return root;
     }
@@ -57,7 +52,7 @@ void trimRightTrailingSpaces(string &input) {
     }).base(), input.end());
 }
 
-TreeNode* stringToTreeNode(string input) {
+BinTreeNode* stringToTreeNode(string input) {
     trimLeftTrailingSpaces(input);
     trimRightTrailingSpaces(input);
     input = input.substr(1, input.length() - 2);
@@ -70,12 +65,12 @@ TreeNode* stringToTreeNode(string input) {
     ss.str(input);
 
     getline(ss, item, ',');
-    TreeNode* root = new TreeNode(stoi(item));
-    queue<TreeNode*> nodeQueue;
+    BinTreeNode* root = new BinTreeNode(stoi(item));
+    queue<BinTreeNode*> nodeQueue;
     nodeQueue.push(root);
 
     while (true) {
-        TreeNode* node = nodeQueue.front();
+        BinTreeNode* node = nodeQueue.front();
         nodeQueue.pop();
 
         if (!getline(ss, item, ',')) {
@@ -85,8 +80,8 @@ TreeNode* stringToTreeNode(string input) {
         trimLeftTrailingSpaces(item);
         if (item != "null") {
             int leftNumber = stoi(item);
-            node->left = new TreeNode(leftNumber);
-            nodeQueue.push(node->left);
+            node->lchild = new BinTreeNode(leftNumber);
+            nodeQueue.push(node->lchild);
         }
 
         if (!getline(ss, item, ',')) {
@@ -96,8 +91,8 @@ TreeNode* stringToTreeNode(string input) {
         trimLeftTrailingSpaces(item);
         if (item != "null") {
             int rightNumber = stoi(item);
-            node->right = new TreeNode(rightNumber);
-            nodeQueue.push(node->right);
+            node->rchild = new BinTreeNode(rightNumber);
+            nodeQueue.push(node->rchild);
         }
     }
     return root;
@@ -107,16 +102,16 @@ int stringToInteger(string input) {
     return stoi(input);
 }
 
-string treeNodeToString(TreeNode* root) {
+string treeNodeToString(BinTreeNode* root) {
     if (root == nullptr) {
       return "[]";
     }
 
     string output = "";
-    queue<TreeNode*> q;
+    queue<BinTreeNode*> q;
     q.push(root);
     while(!q.empty()) {
-        TreeNode* node = q.front();
+        BinTreeNode* node = q.front();
         q.pop();
 
         if (node == nullptr) {
@@ -125,8 +120,8 @@ string treeNodeToString(TreeNode* root) {
         }
 
         output += to_string(node->val) + ", ";
-        q.push(node->left);
-        q.push(node->right);
+        q.push(node->lchild);
+        q.push(node->rchild);
     }
     return "[" + output.substr(0, output.length() - 2) + "]";
 }
@@ -134,13 +129,13 @@ string treeNodeToString(TreeNode* root) {
 int main() {
     string line;
     while (getline(cin, line)) {
-        TreeNode* root = stringToTreeNode(line);
+        BinTreeNode* root = stringToTreeNode(line);
         getline(cin, line);
         int L = stringToInteger(line);
         getline(cin, line);
         int R = stringToInteger(line);
 
-        TreeNode* ret = Solution().trimBST(root, L, R);
+        BinTreeNode* ret = Solution().trimBST(root, L, R);
 
         string out = treeNodeToString(ret);
         cout << out << endl;

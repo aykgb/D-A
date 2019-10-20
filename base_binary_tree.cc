@@ -4,18 +4,13 @@
 #include <functional>
 #include <utility>
 
+#include "base_binary_tree.h"
+
 using namespace std;
 
-struct BinTreeNode {
-    BinTreeNode *lchild;
-    BinTreeNode *rchild;
-    int val;
-    BinTreeNode(int v): val(v), lchild(nullptr), rchild(nullptr) {  }
-};
 
-using Visit = std::function<void(BinTreeNode *)>;
 
-BinTreeNode* create_tree(vector<int>& arr, size_t pos = 0) {
+BinTreeNode* create_tree(vector<int>& arr, size_t pos) {
     BinTreeNode *root = nullptr;
     if(pos < arr.size()) {
         root = new BinTreeNode(arr[pos]);
@@ -118,6 +113,9 @@ void traverse_tree_postorder_nonrecursive(BinTreeNode *root, Visit visit) {
             }
         }
     }
+}
+
+void print_tree_graph(BinTreeNode* root) {
 }
 
 int test_bin_tree()

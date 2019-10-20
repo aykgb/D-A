@@ -60,17 +60,39 @@ class Solution {
    *    说明找到栈顶中记录的下标是右边界，开始，计算面积。
    *
    */
+  int largestRectangleArea3(vector<int>& heights) {
+    int largest_area = 0;
+    vector<int> indexs;
+    heights.push_back(0);
+    for (int i = 0; i < heights.size(); i++) {
+      if (indexs.empty() || heights[i] > heights[indexs.back()]) {
+        indexs.push_back(i);
+      } else {
+        while (!indexs.empty()) {
+          int left_height = heights[indexs.back()];
+          indexs.pop_back();
+
+          int left_index = indexs.empty() ? -1 : indexs.back();
+          largest_area =
+              std::max(largest_area, left_height * (i - left_index - 1));
+        }
+        indexs.push_back(i);
+      }
+    }
+    return largest_area;
+  }
+
   int largestRectangleArea(vector<int>& heights) {
     int max_area = 0;
     vector<int> indexs;
     heights.push_back(0);
-    for(int i  = 0; i< heights.size(); i++) {
-      while(indexs.size() > 0 && heights[i] <= heights[indexs.back()]) {
+    for (int i = 0; i < heights.size(); i++) {
+      while (indexs.size() > 0 && heights[i] <= heights[indexs.back()]) {
         int height = heights[indexs.back()];
         indexs.pop_back();
 
-        int left_boundary = indexs.size() > 0 ? indexs.back() : -1;
-        max_area = std::max(max_area, height * (i - left_boundary - 1));
+        int left_index = indexs.size() > 0 ? indexs.back() : -1;
+        max_area = std::max(max_area, height * (i - left_index - 1));
       }
       indexs.push_back(i);
     }
@@ -110,7 +132,9 @@ class Solution {
 // @lc code=end
 
 int main() {
-  vector<int> nums = {2, 1, 2};
+  // vector<int> nums = {2, 1, 2};
+  vector<int> nums = {2, 1, 5, 6, 2, 3};
+  // vector<int> nums = {1, 1};
   std::cout << Solution().largestRectangleArea(nums) << "\n";
   return 0;
 }

@@ -2,22 +2,17 @@
 #include <vector>
 #include <queue>
 
-using namespace std;
+#include "base_binary_tree.h"
 
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
+using namespace std;
 
 class Solution {
 public:
-    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+    vector<vector<int>> zigzagLevelOrder(BinTreeNode* root) {
         if(root == nullptr) return {};
 
         vector<vector<int>> result;
-        std::queue<TreeNode*> node_queue;
+        std::queue<BinTreeNode*> node_queue;
         node_queue.push(root);
 
         bool left2right = true;
@@ -28,11 +23,11 @@ public:
                 auto curr = node_queue.front();
                 int pos = left2right ? i : size - i - 1;
                 level[pos] = curr->val;
-                if(curr->left) {
-                    node_queue.push(curr->left);
+                if(curr->lchild) {
+                    node_queue.push(curr->lchild);
                 }
-                if(curr->right) {
-                    node_queue.push(curr->right);
+                if(curr->rchild) {
+                    node_queue.push(curr->rchild);
                 }
                 node_queue.pop();
             }
@@ -44,23 +39,12 @@ public:
     }
 };
 
-TreeNode* create_tree(vector<int>& arr, size_t pos = 0) {
-    TreeNode *root = nullptr;
-    if(pos < arr.size()) {
-        root = new TreeNode(arr[pos]);
-        root->left = create_tree(arr, 2 * pos + 1);
-        root->right = create_tree(arr, 2 * pos + 2);
-    }
-
-    return root;
-}
-
 
 int main()
 {
     vector<int> arr{0, 1, 2, 3, 4, 5, 6};
 
-    TreeNode *root = create_tree(arr);
+    BinTreeNode *root = create_tree(arr);
 
     auto result = Solution().zigzagLevelOrder(root);
 
