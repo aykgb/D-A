@@ -9,34 +9,27 @@ using namespace std;
 class Solution {
  public:
   vector<vector<int>> levelOrder(BinTreeNode* root) {
-    std::queue<BinTreeNode*> s0;
-    std::queue<BinTreeNode*> s1;
-    s0.push(root);
-
+    std::queue<BinTreeNode*> queue_curr_level;
+    std::queue<BinTreeNode*> queue_next_level;
     vector<vector<int>> result;
-    while (!s0.empty() || !s1.empty()) {
-      vector<int> level;
-      while (!s0.empty()) {
-        auto curr = s0.front();
-        level.emplace_back(curr->val);
-        s1.push(curr->lchild);
-        s1.push(curr->rchild);
-        s0.pop();
+    int level = 0;
+    queue_curr_level.push(root);
+    while (!queue_curr_level.empty()) {
+      result.emplace_back(vector<int>{});
+      while (!queue_curr_level.empty()) {
+        BinTreeNode* parent = queue_curr_level.front();
+        result[level].emplace_back(parent->val);
+        if (parent->lchild != nullptr) {
+            queue_next_level.push(parent->lchild);
+        }
+        if (parent->rchild != nullptr) {
+            queue_next_level.push(parent->rchild);
+        }
+        queue_curr_level.pop();
       }
-      result.emplace_back(level);
-      level.clear();
-
-      while (!s1.empty()) {
-        auto curr = s1.front();
-        level.emplace_back(curr->val);
-        s0.push(curr->lchild);
-        s0.push(curr->rchild);
-        s1.pop();
-      }
-      result.emplace_back(level);
-      level.clear();
+      level++;
+      queue_next_level.swap(queue_curr_level);
     }
-
     return result;
   }
 };
