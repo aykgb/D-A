@@ -11,6 +11,7 @@ add_library(base_binary_tree base_binary_tree.cc)
 add_executable(base_big_number base_big_number.cc)
 add_executable(base_quick_sort base_quick_sort.cc)
 add_executable(base_heap_sort base_heap_sort.cc)
+add_executable(base_merge_sort base_merge_sort.cc)
 
 add_executable(lc_bintree_level_order_traversal lc_bintree_level_order_traversal.cc)
 target_link_libraries(lc_bintree_level_order_traversal base_binary_tree)
