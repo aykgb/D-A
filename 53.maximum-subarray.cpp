@@ -42,19 +42,34 @@ class Solution {
  public:
   // 本质是动规
   int maxSubArray(vector<int>& nums) {
+    int max_sum = std::numeric_limits<int>::min();
+    int sum = 0;
+    for (auto& num : nums) {
+      sum += num;
+      if (sum > max_sum) {
+        max_sum = sum;
+      }
+      if (sum < 0) {
+        sum = 0;
+      }
+    }
+    return max_sum;
+  }
+
+  int maxSubArray3(vector<int>& nums) {
     int result = std::numeric_limits<int>::min();
     int sumAtLast = -1;
     int n = nums.size();
     for (int i = 0; i < n; ++i) {
-        if(sumAtLast < 0) {
-            sumAtLast = nums[i];
-        } else {
-            sumAtLast += nums[i];
-        }
+      if (sumAtLast < 0) {
+        sumAtLast = nums[i];
+      } else {
+        sumAtLast += nums[i];
+      }
 
-        if (sumAtLast > result) {
-            result = sumAtLast;
-        }
+      if (sumAtLast > result) {
+        result = sumAtLast;
+      }
     }
 
     return result;
