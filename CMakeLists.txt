@@ -27,3 +27,8 @@ target_link_libraries(24.swap-nodes-in-pairs base_linked_list)
 add_executable(21.merge-two-sorted-lists 21.merge-two-sorted-lists.cpp)
 target_link_libraries(21.merge-two-sorted-lists base_linked_list)
 
+add_executable(142.linked-list-cycle-ii 142.linked-list-cycle-ii.cpp)
+target_link_libraries(142.linked-list-cycle-ii base_linked_list)
+
+add_executable(25.reverse-nodes-in-k-group 25.reverse-nodes-in-k-group.cpp)
+target_link_libraries(25.reverse-nodes-in-k-group base_linked_list)
