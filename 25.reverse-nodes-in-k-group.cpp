@@ -61,12 +61,6 @@ class Solution {
   }
   // 使用一个size为k的数组按顺序存放节点的值，再对节点顺序遍历，逆序赋值
   ListNode* reverseKGroup3(ListNode* head, int k) {
-    if (k < 2 || head == nullptr || head->next == nullptr) {
-      return head;
-    }
-    if (countListLength(head) < k) {
-      return head;
-    }
     int idx = 0;
     vector<int> vals(k);
     ListNode* n0 = head;
@@ -149,7 +143,7 @@ int main() {
   vector<int> nums{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
   auto head = create_list(nums);
   print_list_pretty(head);
-  head = Solution().reverseKGroup(head, 3);
+  head = Solution().reverseKGroup3(head, 5);
   print_list_pretty(head);
   destory_list(head);
 
