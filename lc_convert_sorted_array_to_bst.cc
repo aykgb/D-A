@@ -1,14 +1,9 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
+#include "base_binary_tree.h"
 
-struct BinTreeNode {
-    int val;
-    BinTreeNode *lchild;
-    BinTreeNode *rchild;
-    BinTreeNode(int x) : val(x), lchild(NULL), rchild(NULL) {}
-};
+using namespace std;
 
 class Solution {
 public:

@@ -53,6 +53,7 @@ class Solution {
     }
     vector<vector<string>> result;
     unordered_map<string, vector<string>> hash_map;
+    // unordered_map<string, vector<string>&> hash_map; // !尝试对result内的vector<string>做引用，存在引用失效问题
     for (auto& str : strs) {
       auto sorted = sortString(str);
       auto found = hash_map.find(sorted);
