@@ -9,6 +9,7 @@ const int MAX_DISPLAY_SIZE = 20;
 static bool enable_print_result = true;
 
 #define PRINT_RESULT
+#define TOOLS
 
 void EnablePrintResult() { enable_print_result = true; }
 void DisablePrintResult() { enable_print_result = false; }
@@ -59,4 +60,11 @@ void print_result_summary(vector<int>& arr) {
     }
   }
   std::cout << "\n\n";
+}
+
+void print_vec(vector<int>& res) {
+  for (auto& e : res) {
+    std::cout << " " << e;
+  }
+  std::cout << "\n";
 }

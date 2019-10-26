@@ -9,7 +9,6 @@ add_library(base_binary_tree base_binary_tree.cc)
 add_library(base_linked_list base_linked_list.cc)
 
 # link_libraries(base_binary_list) # 全局的链接一个库，对任何可执行文件的编译都会链接该库
-add_executable(base_big_number base_big_number.cc)
 add_executable(base_quick_sort base_quick_sort.cc)
 add_executable(base_heap_sort base_heap_sort.cc)
 add_executable(base_merge_sort base_merge_sort.cc)
@@ -21,20 +20,23 @@ target_link_libraries(lc_bintree_level_order_traversal base_binary_tree)
 add_executable(lc_bintree_zigzag_level_order_traversal lc_bintree_zigzag_level_order_traversal.cc)
 target_link_libraries(lc_bintree_zigzag_level_order_traversal base_binary_tree)
 
-add_executable(24.swap-nodes-in-pairs 24.swap-nodes-in-pairs.cpp)
-target_link_libraries(24.swap-nodes-in-pairs base_linked_list)
-
 add_executable(21.merge-two-sorted-lists 21.merge-two-sorted-lists.cpp)
 target_link_libraries(21.merge-two-sorted-lists base_linked_list)
 
-add_executable(142.linked-list-cycle-ii 142.linked-list-cycle-ii.cpp)
-target_link_libraries(142.linked-list-cycle-ii base_linked_list)
+add_executable(24.swap-nodes-in-pairs 24.swap-nodes-in-pairs.cpp)
+target_link_libraries(24.swap-nodes-in-pairs base_linked_list)
 
 add_executable(25.reverse-nodes-in-k-group 25.reverse-nodes-in-k-group.cpp)
 target_link_libraries(25.reverse-nodes-in-k-group base_linked_list)
 
+add_executable(77.combinations 77.combinations.cpp)
+
 add_executable(94.binary-tree-inorder-traversal 94.binary-tree-inorder-traversal.cpp)
-add_executable(226.invert-binary-tree 226.invert-binary-tree.cpp)
 
 add_executable(104.maximum-depth-of-binary-tree 104.maximum-depth-of-binary-tree.cpp)
 target_link_libraries(104.maximum-depth-of-binary-tree base_binary_tree)
+
+add_executable(142.linked-list-cycle-ii 142.linked-list-cycle-ii.cpp)
+target_link_libraries(142.linked-list-cycle-ii base_linked_list)
+
+add_executable(226.invert-binary-tree 226.invert-binary-tree.cpp)
