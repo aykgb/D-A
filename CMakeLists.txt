@@ -32,3 +32,9 @@ target_link_libraries(142.linked-list-cycle-ii base_linked_list)
 
 add_executable(25.reverse-nodes-in-k-group 25.reverse-nodes-in-k-group.cpp)
 target_link_libraries(25.reverse-nodes-in-k-group base_linked_list)
+
+add_executable(94.binary-tree-inorder-traversal 94.binary-tree-inorder-traversal.cpp)
+add_executable(226.invert-binary-tree 226.invert-binary-tree.cpp)
+
+add_executable(104.maximum-depth-of-binary-tree 104.maximum-depth-of-binary-tree.cpp)
+target_link_libraries(104.maximum-depth-of-binary-tree base_binary_tree)
