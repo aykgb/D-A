@@ -55,12 +55,34 @@
 class Solution {
  public:
   // 直接遍历链表，将链表节点插入新链表合适的位置
-  ListNode* reverseKGroup(ListNode* head, int k) {
-    // TODO: 待实现
-    return head;
+  ListNode* reverseKGroup3(ListNode* head, int k) {
+    if (head == nullptr || k == 1) {
+      return head;
+    }
+    ListNode dummy_head(-1);
+    dummy_head.next = head;
+    ListNode *curr = &dummy_head, *next, *prev = curr;
+    int len = 0;
+    // 计算链表的长度
+    while (curr = curr->next) {
+      len++;
+    }
+    while (len >= k) {
+      curr = prev->next;
+      next = curr->next;
+      for (int i = 0; i < k - 1; i++) {  //!只需要反转k-1次
+        curr->next = next->next;
+        next->next = prev->next;
+        prev->next = next;
+        next = curr->next;
+      }
+      prev = curr;
+      len -= k;
+    }
+    return dummy_head.next;
   }
   // 使用一个size为k的数组按顺序存放节点的值，再对节点顺序遍历，逆序赋值
-  ListNode* reverseKGroup3(ListNode* head, int k) {
+  ListNode* reverseKGroup(ListNode* head, int k) {
     int idx = 0;
     vector<int> vals(k);
     ListNode* n0 = head;
