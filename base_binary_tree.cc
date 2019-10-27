@@ -74,8 +74,8 @@ void traverse_tree_inorder_nonrecursive(BinTreeNode *root, Visit visit) {
       iter = st.top();
       visit(iter);
       st.pop();
-      iter =
-          iter->rchild;  // 当这里迭代到最左的node，iter = iter->rchild 等于空
+      // 当这里迭代到最左的node，iter = iter->rchild 等于空
+      iter = iter->rchild;
     }
   }
 }

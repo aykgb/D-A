@@ -68,6 +68,36 @@ class Solution {
     if (root == nullptr) {
       return {};
     }
+
+    vector<int> result;
+    vector<TreeNode *> s;
+    TreeNode *iter = root;
+    while (!s.empty() || iter != nullptr) {
+      // 入栈 - 直到遇到空节点，说明访问到最左边界节点
+      while (iter != nullptr) {
+        s.push_back(iter);
+        iter = iter->left;
+      }
+
+      // 出栈
+      while(!s.empty()) {
+        iter = s.back();
+        s.pop_back();
+        result.push_back(iter->val);
+        iter = iter->right;
+        if(iter != nullptr) {
+          // 右子树不为空，跳到上面的入栈流程
+          break;
+        }
+      }
+    }
+    return result;
+  }
+
+  vector<int> inorderTraversal3(TreeNode *root) {
+    if (root == nullptr) {
+      return {};
+    }
     vector<int> result;
     vector<TreeNode *> s;
     s.push_back(root);
@@ -88,7 +118,7 @@ class Solution {
           root = root->right;
           break;
         }
-      } while(!s.empty());
+      } while (!s.empty());
     }
 
     return result;

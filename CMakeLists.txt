@@ -39,6 +39,9 @@ target_link_libraries(104.maximum-depth-of-binary-tree base_binary_tree)
 add_executable(142.linked-list-cycle-ii 142.linked-list-cycle-ii.cpp)
 target_link_libraries(142.linked-list-cycle-ii base_linked_list)
 
+add_executable(145.binary-tree-postorder-traversal 145.binary-tree-postorder-traversal.cpp)
+target_link_libraries(145.binary-tree-postorder-traversal base_binary_tree)
+
 add_executable(226.invert-binary-tree 226.invert-binary-tree.cpp)
 
 add_executable(704.binary-search 704.binary-search.cpp)
