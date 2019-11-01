@@ -68,3 +68,15 @@ void print_vec(vector<int>& res) {
   }
   std::cout << "\n";
 }
+
+void print_subsets(vector<vector<int>> result) {
+  std::cout << "[" << std::endl;
+  for (auto& subset : result) {
+    std::cout << "[";
+    for (auto& e : subset) {
+      std::cout << e << " ";
+    }
+    std::cout << "]" << std::endl;
+  }
+  std::cout << "]" << std::endl;
+}

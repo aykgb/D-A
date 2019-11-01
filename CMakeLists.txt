@@ -29,6 +29,8 @@ target_link_libraries(24.swap-nodes-in-pairs base_linked_list)
 add_executable(25.reverse-nodes-in-k-group 25.reverse-nodes-in-k-group.cpp)
 target_link_libraries(25.reverse-nodes-in-k-group base_linked_list)
 
+add_executable(50.pow-x-n 50.pow-x-n.cpp)
+
 add_executable(77.combinations 77.combinations.cpp)
 
 add_executable(78.subsets 78.subsets.cpp)
