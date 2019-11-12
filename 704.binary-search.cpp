@@ -63,7 +63,8 @@ class Solution {
     int left = 0;
     int right = nums.size() - 1;
     while (left <= right) { // !left 和 right相交结束
-      int mid = left + (right - left) / 2;
+      // int mid = left + (right - left) / 2;
+      int mid = (right + left) / 2;
       if (target > nums[mid]) {
         left = mid + 1;
       } else if (target == nums[mid]) {

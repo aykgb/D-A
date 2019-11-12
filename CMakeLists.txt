@@ -40,6 +40,8 @@ add_executable(94.binary-tree-inorder-traversal 94.binary-tree-inorder-traversal
 add_executable(104.maximum-depth-of-binary-tree 104.maximum-depth-of-binary-tree.cpp)
 target_link_libraries(104.maximum-depth-of-binary-tree base_binary_tree)
 
+add_executable(127.word-ladder 127.word-ladder.cpp)
+
 add_executable(142.linked-list-cycle-ii 142.linked-list-cycle-ii.cpp)
 target_link_libraries(142.linked-list-cycle-ii base_linked_list)
 
@@ -49,3 +51,5 @@ target_link_libraries(145.binary-tree-postorder-traversal base_binary_tree)
 add_executable(226.invert-binary-tree 226.invert-binary-tree.cpp)
 
 add_executable(704.binary-search 704.binary-search.cpp)
+
+add_executable(860.lemonade-change 860.lemonade-change.cpp)
