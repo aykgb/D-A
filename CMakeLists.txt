@@ -30,11 +30,10 @@ add_executable(25.reverse-nodes-in-k-group 25.reverse-nodes-in-k-group.cpp)
 target_link_libraries(25.reverse-nodes-in-k-group base_linked_list)
 
 add_executable(50.pow-x-n 50.pow-x-n.cpp)
-
+add_executable(62.unique-paths 62.unique-paths.cpp)
+add_executable(63.unique-paths-ii 63.unique-paths-ii.cpp)
 add_executable(77.combinations 77.combinations.cpp)
-
 add_executable(78.subsets 78.subsets.cpp)
-
 add_executable(94.binary-tree-inorder-traversal 94.binary-tree-inorder-traversal.cpp)
 
 add_executable(104.maximum-depth-of-binary-tree 104.maximum-depth-of-binary-tree.cpp)
@@ -49,7 +48,6 @@ add_executable(145.binary-tree-postorder-traversal 145.binary-tree-postorder-tra
 target_link_libraries(145.binary-tree-postorder-traversal base_binary_tree)
 
 add_executable(226.invert-binary-tree 226.invert-binary-tree.cpp)
-
+add_executable(322.coin-change 322.coin-change.cpp)
 add_executable(704.binary-search 704.binary-search.cpp)
-
 add_executable(860.lemonade-change 860.lemonade-change.cpp)
